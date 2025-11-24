@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 15, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Lenovo/dev/pos-venta-frontend/app/page.tsx"],"sourcesContent":["import { Button } from \"@/components/ui/button\"\n\nexport default function Home() {\n  return (\n  <main className=\"flex flex-col min-h-screen\">\n<h1>ROPA PERSONALIZADA</h1>\n\n\n  </main>\n  )\n}"],"names":[],"mappings":";;;;;;AAEe,SAAS;IACtB,qBACA,iRAAC;QAAK,WAAU;kBAClB,cAAA,iRAAC;sBAAG;;;;;;;;;;;AAKJ","debugId":null}}]
+}
