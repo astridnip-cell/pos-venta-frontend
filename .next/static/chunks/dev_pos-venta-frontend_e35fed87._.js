@@ -163,7 +163,7 @@ function Header() {
                                     className: "h-6 w-6"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                    lineNumber: 23,
+                                    lineNumber: 24,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -171,18 +171,18 @@ function Header() {
                                     children: "Abrir menú"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                    lineNumber: 24,
+                                    lineNumber: 25,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                            lineNumber: 18,
+                            lineNumber: 19,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                        lineNumber: 17,
+                        lineNumber: 18,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -195,17 +195,17 @@ function Header() {
                                 children: "pos-venta-frontend"
                             }, void 0, false, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 31,
+                                lineNumber: 32,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                            lineNumber: 30,
+                            lineNumber: 31,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                        lineNumber: 29,
+                        lineNumber: 30,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -217,7 +217,7 @@ function Header() {
                                 children: "Inicio"
                             }, void 0, false, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 37,
+                                lineNumber: 38,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -226,7 +226,7 @@ function Header() {
                                 children: "Hombre"
                             }, void 0, false, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 38,
+                                lineNumber: 39,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -235,7 +235,7 @@ function Header() {
                                 children: "Mujer"
                             }, void 0, false, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 39,
+                                lineNumber: 40,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -244,7 +244,7 @@ function Header() {
                                 children: "Accesorios"
                             }, void 0, false, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 40,
+                                lineNumber: 41,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -253,13 +253,13 @@ function Header() {
                                 children: "Ofertas"
                             }, void 0, false, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 41,
+                                lineNumber: 42,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                        lineNumber: 36,
+                        lineNumber: 37,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -274,7 +274,7 @@ function Header() {
                                         className: "h-5 w-5"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                        lineNumber: 47,
+                                        lineNumber: 48,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -282,13 +282,13 @@ function Header() {
                                         children: "Buscar"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                        lineNumber: 48,
+                                        lineNumber: 49,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 46,
+                                lineNumber: 47,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -300,7 +300,7 @@ function Header() {
                                         className: "h-5 w-5"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                        lineNumber: 51,
+                                        lineNumber: 52,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -308,13 +308,13 @@ function Header() {
                                         children: "Cuenta"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                        lineNumber: 52,
+                                        lineNumber: 53,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 50,
+                                lineNumber: 51,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -326,7 +326,7 @@ function Header() {
                                         className: "h-5 w-5"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                        lineNumber: 55,
+                                        lineNumber: 56,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -334,25 +334,25 @@ function Header() {
                                         children: "3"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                        lineNumber: 56,
+                                        lineNumber: 57,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 54,
+                                lineNumber: 55,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                        lineNumber: 45,
+                        lineNumber: 46,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                lineNumber: 15,
+                lineNumber: 16,
                 columnNumber: 7
             }, this),
             isMenuOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -371,7 +371,7 @@ function Header() {
                                         className: "h-6 w-6"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                        lineNumber: 69,
+                                        lineNumber: 70,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -379,18 +379,18 @@ function Header() {
                                         children: "Cerrar menú"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                        lineNumber: 70,
+                                        lineNumber: 71,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 68,
+                                lineNumber: 69,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                            lineNumber: 67,
+                            lineNumber: 68,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -401,12 +401,12 @@ function Header() {
                                 className: "w-full"
                             }, void 0, false, {
                                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                lineNumber: 75,
+                                lineNumber: 76,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                            lineNumber: 74,
+                            lineNumber: 75,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -419,7 +419,7 @@ function Header() {
                                     children: "Inicio"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                    lineNumber: 79,
+                                    lineNumber: 80,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -429,7 +429,7 @@ function Header() {
                                     children: "Hombre"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                    lineNumber: 80,
+                                    lineNumber: 81,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -439,7 +439,7 @@ function Header() {
                                     children: "Mujer"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                    lineNumber: 81,
+                                    lineNumber: 82,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -449,7 +449,7 @@ function Header() {
                                     children: "Accesorios"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                    lineNumber: 82,
+                                    lineNumber: 83,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -459,30 +459,30 @@ function Header() {
                                     children: "Ofertas"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                                    lineNumber: 83,
+                                    lineNumber: 84,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                            lineNumber: 78,
+                            lineNumber: 79,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                    lineNumber: 66,
+                    lineNumber: 67,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-                lineNumber: 65,
+                lineNumber: 66,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/dev/pos-venta-frontend/components/header.tsx",
-        lineNumber: 14,
+        lineNumber: 15,
         columnNumber: 5
     }, this);
 }

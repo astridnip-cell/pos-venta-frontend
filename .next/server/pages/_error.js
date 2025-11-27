@@ -1,8 +1,8 @@
 var R=require("../chunks/ssr/[turbopack]_runtime.js")("server/pages/_error.js")
-R.c("server/chunks/ssr/[root-of-the-server]__474c52d7._.js")
-R.c("server/chunks/ssr/[root-of-the-server]__ccab0ca0._.js")
+R.c("server/chunks/ssr/a8f1b_ac31ffb5._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__e6a4d965._.js")
 R.c("server/chunks/ssr/a8f1b_next_1c5aa31d._.js")
+R.c("server/chunks/ssr/a8f1b_f3a90f91._.js")
 R.c("server/chunks/ssr/[externals]_next_dist_shared_lib_no-fallback-error_external_59b92b38.js")
-R.c("server/chunks/ssr/a8f1b_862ca07e._.js")
-R.m(84477)
-module.exports=R.m(84477).exports
+R.m("[project]/dev/pos-venta-frontend/node_modules/next/dist/esm/build/templates/pages.js { INNER_PAGE => \"[project]/dev/pos-venta-frontend/node_modules/next/error.js [ssr] (ecmascript)\", INNER_DOCUMENT => \"[project]/dev/pos-venta-frontend/node_modules/next/document.js [ssr] (ecmascript)\", INNER_APP => \"[project]/dev/pos-venta-frontend/node_modules/next/app.js [ssr] (ecmascript)\" } [ssr] (ecmascript)")
+module.exports=R.m("[project]/dev/pos-venta-frontend/node_modules/next/dist/esm/build/templates/pages.js { INNER_PAGE => \"[project]/dev/pos-venta-frontend/node_modules/next/error.js [ssr] (ecmascript)\", INNER_DOCUMENT => \"[project]/dev/pos-venta-frontend/node_modules/next/document.js [ssr] (ecmascript)\", INNER_APP => \"[project]/dev/pos-venta-frontend/node_modules/next/app.js [ssr] (ecmascript)\" } [ssr] (ecmascript)").exports

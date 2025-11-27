@@ -5,6 +5,7 @@
       --tw-space-x-reverse: 0;
       --tw-border-style: solid;
       --tw-font-weight: initial;
+      --tw-tracking: initial;
       --tw-shadow: 0 0 rgba(0, 0, 0, 0);
       --tw-shadow-color: initial;
       --tw-shadow-alpha: 100%;
@@ -43,6 +44,7 @@
       --tw-space-x-reverse: 0;
       --tw-border-style: solid;
       --tw-font-weight: initial;
+      --tw-tracking: initial;
       --tw-shadow: 0 0 rgba(0, 0, 0, 0);
       --tw-shadow-color: initial;
       --tw-shadow-alpha: 100%;
@@ -81,8 +83,10 @@
 
 @layer theme {
   :root, :host {
+    --color-yellow-300: #ffe02a;
     --color-green-500: #00c758;
     --color-gray-200: #e5e7eb;
+    --color-gray-500: #6a7282;
     --color-white: #fff;
     --spacing: .25rem;
     --text-sm: .875rem;
@@ -93,8 +97,18 @@
     --text-lg--line-height: calc(1.75 / 1.125);
     --text-xl: 1.25rem;
     --text-xl--line-height: calc(1.75 / 1.25);
+    --text-3xl: 1.875rem;
+    --text-3xl--line-height: calc(2.25 / 1.875);
+    --text-4xl: 2.25rem;
+    --text-4xl--line-height: calc(2.5 / 2.25);
+    --text-5xl: 3rem;
+    --text-5xl--line-height: 1;
+    --text-6xl: 3.75rem;
+    --text-6xl--line-height: 1;
     --font-weight-medium: 500;
     --font-weight-bold: 700;
+    --tracking-tighter: -.05em;
+    --tracking-tight: -.025em;
     --default-transition-duration: .15s;
     --default-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
     --default-font-family: var(--font-geist-sans);
@@ -103,15 +117,19 @@
 
   @supports (color: color(display-p3 0 0 0)) {
     :root, :host {
+      --color-yellow-300: color(display-p3 .982669 .880884 .32102);
       --color-green-500: color(display-p3 .308734 .774754 .374307);
       --color-gray-200: color(display-p3 .899787 .906171 .92106);
+      --color-gray-500: color(display-p3 .421287 .446085 .504784);
     }
   }
 
   @supports (color: lab(0% 0 0)) {
     :root, :host {
+      --color-yellow-300: lab(89.7033% -.480324 84.4917);
       --color-green-500: lab(70.5521% -66.5147 45.8072);
       --color-gray-200: lab(91.6229% -.159085 -2.26791);
+      --color-gray-500: lab(47.7841% -.393212 -10.0268);
     }
   }
 }
@@ -558,8 +576,16 @@
     }
   }
 
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
+  }
+
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
+  }
+
+  .mb-8 {
+    margin-bottom: calc(var(--spacing) * 8);
   }
 
   .flex {
@@ -633,8 +659,16 @@
     width: calc(var(--spacing) * 6);
   }
 
+  .w-8 {
+    width: calc(var(--spacing) * 8);
+  }
+
   .w-full {
     width: 100%;
+  }
+
+  .max-w-\[700px\] {
+    max-width: 700px;
   }
 
   .min-w-0 {
@@ -665,6 +699,10 @@
     justify-content: flex-end;
   }
 
+  .gap-1 {
+    gap: calc(var(--spacing) * 1);
+  }
+
   .gap-1\.5 {
     gap: calc(var(--spacing) * 1.5);
   }
@@ -675,6 +713,10 @@
 
   .gap-4 {
     gap: calc(var(--spacing) * 4);
+  }
+
+  .gap-6 {
+    gap: calc(var(--spacing) * 6);
   }
 
   :where(.space-x-2 > :not(:last-child)) {
@@ -745,8 +787,16 @@
     margin-left: calc(calc(var(--spacing) * 8) * calc(1 - var(--tw-space-x-reverse)));
   }
 
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
   .rounded-full {
     border-radius: 3.40282e38px;
+  }
+
+  .rounded-lg {
+    border-radius: var(--radius);
   }
 
   .rounded-md {
@@ -756,6 +806,11 @@
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
+  }
+
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
   }
 
   .border-b {
@@ -769,6 +824,10 @@
 
   .border-input {
     border-color: var(--input);
+  }
+
+  .border-white {
+    border-color: var(--color-white);
   }
 
   .bg-background {
@@ -799,8 +858,20 @@
     background-color: var(--color-white);
   }
 
+  .bg-yellow-300 {
+    background-color: var(--color-yellow-300);
+  }
+
+  .object-cover {
+    object-fit: cover;
+  }
+
   .p-4 {
     padding: calc(var(--spacing) * 4);
+  }
+
+  .px-1 {
+    padding-inline: calc(var(--spacing) * 1);
   }
 
   .px-3 {
@@ -823,12 +894,25 @@
     padding-block: calc(var(--spacing) * 2);
   }
 
+  .py-12 {
+    padding-block: calc(var(--spacing) * 12);
+  }
+
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
   }
 
   .pb-6 {
     padding-bottom: calc(var(--spacing) * 6);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-3xl {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
   }
 
   .text-base {
@@ -865,8 +949,22 @@
     font-weight: var(--font-weight-medium);
   }
 
+  .tracking-tight {
+    --tw-tracking: var(--tracking-tight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .tracking-tighter {
+    --tw-tracking: var(--tracking-tighter);
+    letter-spacing: var(--tracking-tighter);
+  }
+
   .whitespace-nowrap {
     white-space: nowrap;
+  }
+
+  .text-gray-500 {
+    color: var(--color-gray-500);
   }
 
   .text-primary {
@@ -1137,6 +1235,25 @@
     }
   }
 
+  @media (min-width: 40rem) {
+    .sm\:text-4xl {
+      font-size: var(--text-4xl);
+      line-height: var(--tw-leading, var(--text-4xl--line-height));
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:col-span-1 {
+      grid-column: span 1 / span 1;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:col-span-7 {
+      grid-column: span 7 / span 7;
+    }
+  }
+
   @media (min-width: 48rem) {
     .md\:flex {
       display: flex;
@@ -1150,9 +1267,47 @@
   }
 
   @media (min-width: 48rem) {
+    .md\:grid-cols-12 {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:flex-col {
+      flex-direction: column;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:px-16 {
+      padding-inline: calc(var(--spacing) * 16);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:py-16 {
+      padding-block: calc(var(--spacing) * 16);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:text-5xl {
+      font-size: var(--text-5xl);
+      line-height: var(--tw-leading, var(--text-5xl--line-height));
+    }
+  }
+
+  @media (min-width: 48rem) {
     .md\:text-sm {
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .lg\:text-6xl {
+      font-size: var(--text-6xl);
+      line-height: var(--tw-leading, var(--text-6xl--line-height));
     }
   }
 
@@ -1565,6 +1720,11 @@
 }
 
 @property --tw-font-weight {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-tracking {
   syntax: "*";
   inherits: false
 }
