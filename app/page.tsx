@@ -37,14 +37,42 @@ export default function Home() {
         </div>
 
         {/* Imagen principal */}
-        <div className="md:col-span-7">
+        <div className="md:col-span-6 relative">
           <Image
-            src="/plaeholder.svg?height=400&width=800"
+            src="/placeholder.svg?height=400&width=800"
             alt="Colección destacada"
             width={800}
             height={600}
-            className="w-full rounded-lg object-cover"
+            className="rounded-lg object-cover w-full"
           />
+        </div>
+
+        {/* Opciones de productos */}
+        <div className="md:col-span-5 space-y-4">
+          { /* productos 1 */ }
+          <div className="flex items-center gap-4 border rounded-lg p-3">
+            <Image
+              src="/placeholder.svg?height=200&width=400"
+              alt="Producto destacado"
+              width={400}
+              height={200}
+              className="rounded-lg object-cover w-full mb-4"
+            />
+            <div className="flex-1">
+              <h3 className="font-medium">Camisetas Premium</h3>
+              <div>
+                {[...Array(5)].map((_, index) => (
+                  <Star  
+                  key={index} 
+                  className="w-4 h-4 fill-amber-400 text-amber-400"
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>  
