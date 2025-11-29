@@ -11,7 +11,7 @@ export default function Home() {
     <section className="py-12 md:py-16">
       <div className="container px-4 md:px-16">
         <div className="flex flex-col items-center text-center mb-8">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Ropa personalizada diseñada para<span className="bg-yellow-300 px-1">Tu Estilo</span>
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Ropa personalizada diseñada para<span className="bg-pink-600 px-1">Tu Estilo</span>
           </h1>
           <p className="mt-4 max-w-[700px] text-gray-500 text-sm">Cada prenda está confeccionada con los mejores materiales, diseñada para máximo confort, estilos y durabilidad - lo que necesitas para expresar tu estilo único
           </p>
@@ -23,7 +23,7 @@ export default function Home() {
               {[1, 2, 3].map((i) => (
                 <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white" key={i}>
                 <Image
-                  src={`/placeholder.svg?height=32&width=32&text=${i}`}
+                  src={"/imagen_principal.png"}
                   alt={`Clientes ${i}`}
                   width={32}
                   height={32}
@@ -39,7 +39,7 @@ export default function Home() {
         {/* Imagen principal */}
         <div className="md:col-span-6 relative">
           <Image
-            src="/placeholder.svg?height=400&width=800"
+            src="/modelo.png"
             alt="Colección destacada"
             width={800}
             height={600}
@@ -51,32 +51,60 @@ export default function Home() {
         <div className="md:col-span-5 space-y-4">
           { /* productos 1 */ }
           <div className="flex items-center gap-4 border rounded-lg p-3">
+            <div className="w-[150px] h-[150px] rounded-full overflow-hidden">
             <Image
-              src="/placeholder.svg?height=200&width=400"
-              alt="Producto destacado"
-              width={400}
-              height={200}
-              className="rounded-lg object-cover w-full mb-4"
+              src="/camiseta_premium.jpg"
+              alt="Camisetas Premium"
+              width={100}
+              height={100}
+              className="object-cover rounded-full w-full h-full"
             />
+            </div>
             <div className="flex-1">
               <h3 className="font-medium">Camisetas Premium</h3>
-              <div>
-                {[...Array(5)].map((_, index) => (
+              <div className="flex items-center mt-1">
+                {[...Array(5)].map((_, i) => (
                   <Star  
-                  key={index} 
+                  key={i} 
                   className="w-4 h-4 fill-amber-400 text-amber-400"
                   />
                 ))}
               </div>
             </div>
+            <div className="text-right">
+              <p className="font-bold">$130.000COP</p>
+            </div>
           </div>
+          { /* productos 2 */ }
+          <div className="flex items-center gap-4 border rounded-lg p-3">
+            <div className="w-[150px] h-[150px] rounded-full overflow-hidden">
+            <Image
+              src="/sudadera_Premium.jpg"
+              alt="Sudaderas Premium"
+              width={100}
+              height={100}
+              className="object-cover rounded-full w-full h-full"
+            />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-medium">Sudaderas Premium</h3>
+              <div className="flex items-center mt-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star  
+                  key={i} 
+                  className="w-4 h-4 fill-amber-400 text-amber-400"
+                  />
+                ))}
               </div>
+            </div>
+            <div className="text-right">
+              <p className="font-bold">$150.000COP</p>
             </div>
           </div>
         </div>
       </div>
-    </div>  
-    </section>
+    </div>
+   </section>
   </main>
   )
 }
