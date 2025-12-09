@@ -3,6 +3,7 @@ import { Star, ChevronRight} from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 import { StatsSection } from "@/components/stats-section";
+import { ProductCard } from "@/components/product-card";
 
 //Esta es la página principal
 export default function Home() {
@@ -80,7 +81,7 @@ export default function Home() {
           <div className="flex items-center gap-4 border rounded-lg p-3">
             <div className="w-[150px] h-[150px] rounded-full overflow-hidden">
             <Image
-              src="/sudadera_Premium.jpg"
+              src="/sudadera_premium.jpg"
               alt="Sudaderas Premium"
               width={100}
               height={100}
@@ -120,7 +121,23 @@ export default function Home() {
 
    <StatsSection />
 
-   {/* sECTION HECHO POR NOSOTROS */}
+{/* SECTION HECHO POR NOSOTROS */}
+<section className="py-2 md:py-16"> {/* <--- CORREGIDO: Añadido '16' */}
+    <div className="container px-4 md:px-6">
+        <h2 className="text-3xl font-bold text-center mb-12"> {/* <--- CORREGIDO: Cambiado ':' por '-' */}
+            Hecho con ❤️ por un equipo apasionado por la moda y la personalización
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ProductCard
+                name="Camisetas Esenciales"
+                price={130000}
+                imageSrc="/camiseta_premium.jpg"
+                href="/products/camisetas-esenciales"
+            />
+        </div>
+    </div>
+</section>
+
   </main>
   )
 }
