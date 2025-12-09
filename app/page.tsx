@@ -101,6 +101,17 @@ export default function Home() {
               <p className="font-bold">$150.000COP</p>
             </div>
           </div>
+          
+          { /* Botón de compra */ }
+          <div className="flex justify-end mt-6">
+            <button className="roundend-full px-6 bg-black text-white hover:bg-green-800 flex items-center gap-2">
+      
+              Ver colección
+              <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center ml-1">
+                <ChevronRight className="w-4 h-4"/>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
