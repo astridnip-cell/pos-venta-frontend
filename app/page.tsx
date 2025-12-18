@@ -134,6 +134,20 @@ export default function Home() {
                 imageSrc="/camiseta_premium.jpg"
                 href="/products/camisetas-esenciales"
             />
+
+            <ProductCard
+                name="Camisetas Esenciales"
+                price={130000}
+                imageSrc="/camiseta_premium.jpg"
+                href="/products/camisetas-esenciales"
+            />
+
+            <ProductCard
+                name="Camisetas Esenciales"
+                price={130000}
+                imageSrc="/camiseta_premium.jpg"
+                href="/products/camisetas-esenciales"
+            />
         </div>
     </div>
 </section>
