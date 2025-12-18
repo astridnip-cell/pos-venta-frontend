@@ -1625,19 +1625,30 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$front
 ;
 ;
 ;
+var REACT_LAZY_TYPE = Symbol.for("react.lazy");
+var use = __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[" use ".trim().toString()];
+function isPromiseLike(value) {
+    return typeof value === "object" && value !== null && "then" in value;
+}
+function isLazyComponent(element) {
+    return element != null && typeof element === "object" && "$$typeof" in element && element.$$typeof === REACT_LAZY_TYPE && "_payload" in element && isPromiseLike(element._payload);
+}
 // @__NO_SIDE_EFFECTS__
 function createSlot(ownerName) {
     const SlotClone = /* @__PURE__ */ createSlotClone(ownerName);
-    const Slot2 = __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
-        const { children, ...slotProps } = props;
-        const childrenArray = __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].toArray(children);
+    const Slot2 = __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.forwardRef((props, forwardedRef)=>{
+        let { children, ...slotProps } = props;
+        if (isLazyComponent(children) && typeof use === "function") {
+            children = use(children._payload);
+        }
+        const childrenArray = __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Children.toArray(children);
         const slottable = childrenArray.find(isSlottable);
         if (slottable) {
             const newElement = slottable.props.children;
             const newChildren = childrenArray.map((child)=>{
                 if (child === slottable) {
-                    if (__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].count(newElement) > 1) return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].only(null);
-                    return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"](newElement) ? newElement.props.children : null;
+                    if (__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Children.count(newElement) > 1) return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Children.only(null);
+                    return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.isValidElement(newElement) ? newElement.props.children : null;
                 } else {
                     return child;
                 }
@@ -1645,7 +1656,7 @@ function createSlot(ownerName) {
             return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(SlotClone, {
                 ...slotProps,
                 ref: forwardedRef,
-                children: __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"](newElement) ? __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cloneElement"](newElement, void 0, newChildren) : null
+                children: __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.isValidElement(newElement) ? __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.cloneElement(newElement, void 0, newChildren) : null
             });
         }
         return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(SlotClone, {
@@ -1660,17 +1671,20 @@ function createSlot(ownerName) {
 var Slot = /* @__PURE__ */ createSlot("Slot");
 // @__NO_SIDE_EFFECTS__
 function createSlotClone(ownerName) {
-    const SlotClone = __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
-        const { children, ...slotProps } = props;
-        if (__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"](children)) {
+    const SlotClone = __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.forwardRef((props, forwardedRef)=>{
+        let { children, ...slotProps } = props;
+        if (isLazyComponent(children) && typeof use === "function") {
+            children = use(children._payload);
+        }
+        if (__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.isValidElement(children)) {
             const childrenRef = getElementRef(children);
             const props2 = mergeProps(slotProps, children.props);
-            if (children.type !== __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"]) {
+            if (children.type !== __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Fragment) {
                 props2.ref = forwardedRef ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeRefs"])(forwardedRef, childrenRef) : childrenRef;
             }
-            return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cloneElement"](children, props2);
+            return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.cloneElement(children, props2);
         }
-        return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].count(children) > 1 ? __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].only(null) : null;
+        return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Children.count(children) > 1 ? __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Children.only(null) : null;
     });
     SlotClone.displayName = "".concat(ownerName, ".SlotClone");
     return SlotClone;
@@ -1690,7 +1704,7 @@ function createSlottable(ownerName) {
 }
 var Slottable = /* @__PURE__ */ createSlottable("Slottable");
 function isSlottable(child) {
-    return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"](child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$pos$2d$venta$2d$frontend$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
 }
 function mergeProps(slotProps, childProps) {
     const overrideProps = {
