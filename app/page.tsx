@@ -3,7 +3,7 @@ import { Star, ChevronRight} from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 import { StatsSection } from "@/components/stats-section";
-
+import { getProducts, getStrapiMedia, type Product } from "../lib/strapi";
 //Esta es la página principal
 export default function Home() {
   return (
