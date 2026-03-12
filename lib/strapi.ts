@@ -1,25 +1,35 @@
 /**
  * Cliente de Strapi para Next.js
+<<<<<<< HEAD
  * Funciones para consumir la API de Strapi
+=======
+>>>>>>> 00666b49f175c8eaa3f16ef937363337986796c4
  */
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
 
+<<<<<<< HEAD
 /**
  * Fetch genérico para la API de Strapi
  */
+=======
+>>>>>>> 00666b49f175c8eaa3f16ef937363337986796c4
 export async function fetchAPI<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
   const url = `${STRAPI_URL}/api${endpoint}`;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 00666b49f175c8eaa3f16ef937363337986796c4
   const res = await fetch(url, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
     },
+<<<<<<< HEAD
     next: { revalidate: 60 }, // Revalidar cada 60 segundos
   });
 
@@ -33,12 +43,22 @@ export async function fetchAPI<T>(
 /**
  * Obtener URL completa de imagen de Strapi
  */
+=======
+    next: { revalidate: 60 },
+  });
+
+  if (!res.ok) throw new Error(`Error fetching ${endpoint}: ${res.status}`);
+  return res.json();
+}
+
+>>>>>>> 00666b49f175c8eaa3f16ef937363337986796c4
 export function getStrapiMedia(url: string | null | undefined): string {
   if (!url) return '/placeholder.svg';
   if (url.startsWith('http')) return url;
   return `${STRAPI_URL}${url}`;
 }
 
+<<<<<<< HEAD
 /**
  * Obtener todas las categorías
  */
@@ -83,10 +103,18 @@ export async function getProducts(params?: ProductQueryParams) {
     query += `&sort=${params.sort}`;
   }
 
+=======
+export async function getProducts(params?: ProductQueryParams) {
+  let query = '/products?populate=*';
+  if (params?.featured) query += `&filters[featured][$eq]=true`;
+  if (params?.limit) query += `&pagination[pageSize]=${params.limit}`;
+  
+>>>>>>> 00666b49f175c8eaa3f16ef937363337986796c4
   const response = await fetchAPI<StrapiResponseWithMeta<Product[]>>(query);
   return response;
 }
 
+<<<<<<< HEAD
 /**
  * Obtener un producto por slug
  */
@@ -166,12 +194,16 @@ export interface Category {
   createdAt: string;
   updatedAt: string;
 }
+=======
+// ==================== TIPOS EXPORTADOS ====================
+>>>>>>> 00666b49f175c8eaa3f16ef937363337986796c4
 
 export interface Product {
   id: number;
   documentId: string;
   name: string;
   slug: string;
+<<<<<<< HEAD
   description: string | null;
   price: number;
   originalPrice: number | null;
@@ -194,3 +226,23 @@ export interface ProductQueryParams {
   page?: number;
   sort?: string;
 }
+=======
+  price: number;
+  featured: boolean;
+  image: StrapiImage | null;
+}
+
+export interface StrapiResponseWithMeta<T> {
+  data: T;
+  meta: { pagination: { total: number } };
+}
+
+export interface StrapiImage {
+  url: string;
+}
+
+export interface ProductQueryParams {
+  featured?: boolean;
+  limit?: number;
+}
+>>>>>>> 00666b49f175c8eaa3f16ef937363337986796c4

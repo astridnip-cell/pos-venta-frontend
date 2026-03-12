@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 node_modules
 .next
 .env*
 
+=======
+node_modules/
+>>>>>>> 00666b49f175c8eaa3f16ef937363337986796c4
