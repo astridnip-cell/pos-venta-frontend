@@ -27,3 +27,23 @@ export function calculateDiscount (originalPrice : number, salePrice:number): nu
     if (originalPrice || originalPrice <= salePrice) return 0;
     return Math.round (((originalPrice - salePrice) / originalPrice) *100);
 }
+/**
+ * Formatea el descuento como texto
+ * @param originalPrice - precio original
+ * @param salePrice - precio de venta
+ * @returns texto del descuento (ej: "-25%")
+ */
+
+export function formatDiscount (originalPrice: number, salePrice: number): string {;
+    const discount = calculateDiscount (originalPrice, salePrice);
+    return discount > 0 ? '-${discount}%' : '';
+}
+
+/**
+ * Formatea un número con separadores de miles
+ * @param num - Número a formatear
+ * @returns Número de formateado (ej: "1.234.567")
+ */
+export function formatNumber (num: number): string {
+    return new Intl.NumberFormat('es-CO').format(num);
+}

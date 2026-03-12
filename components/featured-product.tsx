@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Check, ShoppingCart } from "lucide-react";
 
+import {formatCOP} from "../lib/format";
+
 export function FeaturedProduct({
   title,
   description,
@@ -13,10 +15,12 @@ export function FeaturedProduct({
   title: string;
   description: string;
   price: number;
-  salePrice: number;
+  salePrice?: number;
   features: string[];
   reversed?: boolean;
 }) {
+  const hasDiscount = salePrice && salePrice < price;
+  const displayPrice = salePrice || price;
   return (
     <section className="py-12 md:py-24">
       <div className="container px-4 md:px-6">
@@ -39,7 +43,7 @@ export function FeaturedProduct({
             <div className="mt-8 flex items-center gap-4">
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl font-bold">
-                  ${salePrice.toFixed(2)}
+                  ${formatCOP(displayPrice)}
                 </span>
                 <span className="text-lg text-gray-500 line-through">
                   ${price.toFixed(2)}
