@@ -8,34 +8,42 @@ import { ReviewCard } from "@/components/review-card";
 import { FeaturedInSection } from "../components/featured-in-section";
 import { CommitmentSection } from "../components/commitment-section";
 import { FeaturedProduct } from "../components/featured-product";
+import { getProducts, getStrapiMedia} from "../lib/strapi";
 
-import { getProducts, getStrapiMedia, type Product } from "../lib/strapi";
-// 1. Rigor de TypeScript: Definición de Interfaces
-interface StrapiImage {
-  url: string;
-}
-
+/**
+ * 1. Definición de Interfaz Local
+ * Esto evita el error de "Type Product is not assignable" al no chocar 
+ * con las importaciones externas.
+ */
 interface Product {
-  id: string | number;
+  id: number;
   name: string;
   price: number;
   slug: string;
-  image?: {
+  image: {
     url: string;
-  };
+  } | null;
 }
 
 export default async function Home() {
-  // 2. Obtención de datos con fallback para evitar errores de renderizado
+  /**
+   * 2. Obtención de datos desde Strapi
+   * Usamos el operador de encadenamiento opcional (?.) para mayor seguridad.
+   */
   const response = await getProducts({
     featured: true,
     limit: 6,
   });
 
   const featuredProducts: Product[] = response?.data || [];
-  // Si no hay productos, mostramos un estado vacío o un mensaje para evitar que la página rompa
+
+  // Estado de carga/vacío en caso de que Strapi no devuelva productos
   if (featuredProducts.length === 0) {
-    return <div className="container p-16 text-center">Cargando colección...</div>;
+    return (
+      <div className="container p-16 text-center">
+        <p className="text-gray-500 italic">Cargando colección de moda...</p>
+      </div>
+    );
   }
 
   return (
@@ -55,86 +63,40 @@ export default async function Home() {
           </div>
 
           <div className="grid md:grid-cols-12 gap-6 items-center">
-            {/* Avatars clientes */}
-            <div className="md:col-span-1 flex md:flex-col items-center gap-2 ">
-              <div className="flex md:flex-col gap-1">
-                {[1, 2, 3].map((i) => (
-                  <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white" key={i}>
-                    <Image
-                      src={`/placeholder.svg?height=32&width=32&text=${i}`}
-                      width={32}
-                      height={32}
-                      alt={`Cliente ${i}`}
-                      className="object-cover rounded-full"
-                    />
-                  </div>
-                ))}
-              </div>
-              <span className="text-xs text-gray-500">Clientes Satisfechos</span>
-            </div>
-
-            {/* Imagen principal - Protección contra índices inexistentes */}
-            <div className="md:col-span-6 relative">
+            {/* Imagen Principal (Primer producto de Strapi) */}
+            <div className="md:col-span-7 relative">
               <Image
                 src={getStrapiMedia(featuredProducts[0]?.image?.url)}
                 alt={featuredProducts[0]?.name || "Producto destacado"}
-                width={600}
-                height={400}
-                className="rounded-lg object-cover w-full h-auto"
-                priority // Carga prioritaria por ser la imagen principal
+                width={800}
+                height={500}
+                className="rounded-lg object-cover w-full h-[400px] shadow-2xl"
+                priority 
               />
             </div>
 
-            {/* Opciones de productos */}
-            <div className="md:col-span-5 space-y-4">
-              {/* Producto 1 */}
-              <div className="flex items-center gap-4 border rounded-lg p-3">
-                <Image
-                  src={getStrapiMedia(featuredProducts[1]?.image?.url) || "/placeholder.svg"}
-                  width={100}
-                  height={100}
-                  alt="Camisetas premium"
-                  className="rounded-full object-cover w-20 h-20"
-                />
-                <div className="flex-1">
-                  <h3 className="font-medium">Camisetas Premium</h3>
-                  <div className="flex items-center mt-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-bold">$130.000 COP</p>
+            {/* Detalles del producto destacado */}
+            <div className="md:col-span-5 space-y-6">
+              <div>
+                <h2 className="text-3xl font-bold">{featuredProducts[0]?.name}</h2>
+                <div className="flex items-center mt-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                  ))}
+                  <span className="ml-2 text-sm text-gray-500">(4.8/5 reseña)</span>
                 </div>
               </div>
-
-              {/* Producto 2 */}
-              <div className="flex items-center gap-4 border rounded-lg p-3">
-                <Image
-                  src={getStrapiMedia(featuredProducts[2]?.image?.url) || "/placeholder.svg"}
-                  width={100}
-                  height={100}
-                  alt="Sudaderas Premium"
-                  className="rounded-full object-cover w-20 h-20"
-                />
-                <div className="flex-1">
-                  <h3 className="font-medium">Sudaderas Premium</h3>
-                  <div className="flex items-center mt-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-bold">$150.000 COP</p>
-                </div>
-              </div>
-
-              <div className="flex justify-end mt-6">
-                <Button className="rounded-full px-6 bg-black text-white hover:bg-gray-900 flex items-center gap-2">
-                  Ver colección
-                  <ChevronRight className="w-4 h-4" />
+              
+              <p className="text-2xl font-bold text-green-700">
+                ${featuredProducts[0]?.price?.toLocaleString()} COP
+              </p>
+              
+              <div className="flex gap-4">
+                <Button className="flex-1 bg-black text-white hover:bg-gray-800 rounded-full h-12">
+                  Comprar Ahora
+                </Button>
+                <Button variant="outline" className="rounded-full h-12 px-8">
+                  Ver detalles
                 </Button>
               </div>
             </div>
@@ -143,15 +105,15 @@ export default async function Home() {
       </section>
 
       <StatsSection />
-
-      {/* Seccion hecho por nosotros */}
+      
+      {/* Cuadrícula de Colección */}
       <section className="py-12 md:py-24">
         <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold text-center mb-12">
             Hecho por Nosotros, Perfeccionado Por Ti
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProducts.slice(0, 3).map((product: Product) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 name={product.name}
@@ -167,49 +129,26 @@ export default async function Home() {
       <FeaturedInSection />
       <CommitmentSection />
 
-      {/* Sección reseñas */}
+      {/* Reseñas de Clientes */}
       <section className="py-12 md:py-24 bg-gray-50">
         <div className="container px-4 md:px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Reseñas de nuestros clientes satisfechos
-          </h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Lo que dicen nuestros clientes</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <ReviewCard name="María G." rating={5} comment="Las camisetas son increíblemente suaves..." />
-            <ReviewCard name="Carlos R." rating={5} comment="Los jeans son perfectos en ajuste." />
-            <ReviewCard name="Laura M." rating={4} comment="El servicio al cliente es excelente." />
-            <ReviewCard name="David S." rating={4} comment="Las sudaderas son muy cómodas." />
+            <ReviewCard name="María G." rating={5} comment="Las camisetas son increíblemente suaves y el diseño es justo lo que buscaba." />
+            <ReviewCard name="Carlos R." rating={5} comment="Excelente calidad en los jeans. El envío a Bogotá fue muy rápido." />
+            <ReviewCard name="Laura M." rating={4} comment="Me encantó la sudadera, el color es idéntico a la foto de la web." />
+            <ReviewCard name="David S." rating={5} comment="Atención al cliente de 10. Recomiendo mucho la marca." />
           </div>
         </div>
       </section>
 
-      {/* Productos destacados detalle */}
       <FeaturedProduct
-        title="Camiseta Signature"
-        description="Algodón orgánico de la más alta calidad."
-        price={34.99}
-        salePrice={29.99}
-        features={["100% algodón orgánico", "Tintes naturales"]}
+        title="Edición Limitada Signature"
+        description="Algodón orgánico premium con acabados hechos a mano."
+        price={150000}
+        salePrice={120000}
+        features={["100% Algodón Colombiano", "Tintes Ecológicos", "Costura Reforzada"]}
       />
-
-      <section className="py-12 md:py-24 bg-gray-900 text-white">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 items-center">
-            <div>
-              <h2 className="text-3xl font-bold md:text-4xl/tight">La moda reimaginada. Por Ti.</h2>
-              <Button className="mt-6 bg-green-500 hover:bg-green-600">Explorar Colección</Button>
-            </div>
-            <div className="relative">
-              <Image
-                src="/placeholder.svg?height=500&width=800"
-                alt="Colección"
-                width={800}
-                height={500}
-                className="rounded-lg object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

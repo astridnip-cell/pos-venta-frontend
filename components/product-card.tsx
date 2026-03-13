@@ -3,14 +3,17 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 
+
 export function ProductCard({
   name,
   price,
+  originalPrice,
   imageSrc,
   href,
 }: {
   name: string;
   price: number;
+  originalPrice: number | null;
   imageSrc: string;
   href?: string;
 }) {
