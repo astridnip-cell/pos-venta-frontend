@@ -25,10 +25,11 @@ import { getProducts, getStrapiMedia } from "@/lib/strapi";
 // Página de categoría Accesorios
 export default async function AccesoriesPage() {
   // Obtener los productos de Strapi
-  const {data: products, meta } =await getProducts ({
+  const { data: products, meta } = await getProducts({
     category: "accesorios",
-  })
-  //En una implementación real, estos datos vendrían de Strapi
+  });
+  
+  // En una implementación real, estos datos vendrían de Strapi
   const categories = [
     { name: "Bolsos", count: 24 },
     { name: "Cinturones", count: 18 },
@@ -39,11 +40,25 @@ export default async function AccesoriesPage() {
   const response = await getProducts({ category: "accesorios" });
   const productsFromStrapi = response?.data || [];
 
-
   return (
     <main className="flex flex-col min-h-screen">
-      <section className="relative h-[200px] bg-gray-100 flex items-center justify-center">
-        <h1 className="text-3xl font-bold uppercase tracking-widest">Accesorios</h1>
+      {/* Banner de categoria*/}
+      <section className="relative h-[200px] md:h-[300px]">
+        {/*Mostrar un banner de accesorios*/}
+        <Image
+          src={getStrapiMedia(products?.[0]?.image?.url) || "/placeholder.jpg"}
+          alt="Accesorios"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <div className="text-center text-white">
+            <h1 className="text-3xl font-bold uppercase tracking-widest">Accesorios</h1>
+            <p className="mt-2 md:mt-4 text-sm md:text-base max-w-md mx-auto">
+              Complementa tu estilo con nuestra colección de accesorios de alta calidad.
+            </p>
+          </div>
+        </div>
       </section>
 
       <div className="container px-4 py-8 mx-auto flex flex-col md:flex-row gap-8">
@@ -61,30 +76,6 @@ export default async function AccesoriesPage() {
           <Separator />
         </aside>
 
-
-
-            return(
-              <main className="flex flex-col min-h-screen">
-                {/* Banner de categoria*/}
-                <section className="relative h-[200px] md:h-[300px]">
-                {/*Mostrar un banner de accesorios*/}
-                <Image
-                src={getStrapiMedia(products[0].image?.url) || "/placeholder.jpg"}
-                alt="Accesorios"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute insert-0 bg-black/40 flex items-center justify-center">
-              <div className="text-center text-white">
-                <h1 className="mt-2 md:mt-4 text-sm md:text-base max-w-md mx-auto">
-                  complementa tu estilo con nuestra colección de accesorios de alta calidad.
-
-                </h1>
-
-              </div>
-
-              </div>
-            )
         {/* Grid de Productos */}
         <div className="flex-1">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -93,47 +84,38 @@ export default async function AccesoriesPage() {
                 key={product.id}
                 name={product.name}
                 price={product.price}
-                // Usamos originalPrice en minúscula para que coincida con tu interfaz
                 originalPrice={product.originalPrice || null} 
                 imageSrc={getStrapiMedia(product.image?.url)}
                 href={`/producto/${product.slug}`}
               />
             ))}
           </div>
+
+          {/* Paginación */}
+          {meta?.pagination?.pageCount > 1 && (
+            <div className="flex justify-center mt-12">
+              <nav className="flex items-center gap-1">
+                <Button variant="outline" size="icon" disabled>
+                  <ChevronRight className="h-4 w-4 rotate-180" />
+                </Button>
+                {Array.from({ length: meta.pagination.pageCount || 0 }, (_, i) => (
+                  <Button
+                    key={i}
+                    variant="outline"
+                    size="sm"
+                    className="bg-primary text-primary-foreground"
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+                <Button variant="outline" size="icon">
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </nav>
+            </div>
+          )}
         </div>
       </div>
     </main>
   );
 }
-
-
-{/* Paginación */}
-{meta.pagination.pageCount > 1 && (
-  <div className="flex justify-center mt-12">
-  <nav className="flex items-center gap-1">
-    <Button variant="outline" size="icon" disabled>
-      <ChevronRight className="h-4 w-4 rotate-180" />
-    </Button>
-     {Array.from({ length: meta.pagination.pageCount || 0 }, (_, i) => (
-      <Button
-        variant="outline"
-        size="sm"
-        className="bg-primary text-primary-foreground"
-        >
-          {i+1}
-      </Button>
-     ))}
-    
-      <Button variant="outline" size="icon">
-        <ChevronRight className="h-4 w-4" />
-      </Button>
- </nav>
-</div>
-)}
-
-</div>
-</div>
-</div>
-</main>
-    );
-  }

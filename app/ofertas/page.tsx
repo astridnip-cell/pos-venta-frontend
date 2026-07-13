@@ -18,15 +18,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
+import { ProductCard } from "@/components/product-card";
+import { getProducts, getStrapiMedia } from "@/lib/strapi";
 
 // Página de Ofertas
-export default function SalesPage() {
+export default async function SalesPage() {
+  const { data: products, meta } = await getProducts({ category: "ofertas" });
   // En una implementación real, estos datos vendrían de Strapi
   const categories = [
-    { name: "Hombre", count: 42 },
-    { name: "Mujer", count: 56 },
-    { name: "Accesorios", count: 28 },
+    { name: "Hombre", count: 5 },
+    { name: "Mujer", count: 6 },
+    { name: "Accesorios", count: 4 },
   ];
 
   const filters = [
@@ -50,123 +52,12 @@ export default function SalesPage() {
     },
   ];
 
-  const products = [
-    {
-      id: 1,
-      name: "Camiseta Premium",
-      originalPrice: 29.99,
-      salePrice: 19.99,
-      discount: 33,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S1",
-      category: "Hombre",
-    },
-    {
-      id: 2,
-      name: "Vestido Casual",
-      originalPrice: 59.99,
-      salePrice: 39.99,
-      discount: 33,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S2",
-      category: "Mujer",
-    },
-    {
-      id: 3,
-      name: "Jeans Clásicos",
-      originalPrice: 69.99,
-      salePrice: 49.99,
-      discount: 29,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S3",
-      category: "Hombre",
-    },
-    {
-      id: 4,
-      name: "Bolso Tote",
-      originalPrice: 49.99,
-      salePrice: 29.99,
-      discount: 40,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S4",
-      category: "Accesorios",
-    },
-    {
-      id: 5,
-      name: "Chaqueta Denim",
-      originalPrice: 79.99,
-      salePrice: 49.99,
-      discount: 38,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S5",
-      category: "Mujer",
-    },
-    {
-      id: 6,
-      name: "Zapatillas Casual",
-      originalPrice: 89.99,
-      salePrice: 59.99,
-      discount: 33,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S6",
-      category: "Hombre",
-    },
-    {
-      id: 7,
-      name: "Falda Plisada",
-      originalPrice: 44.99,
-      salePrice: 24.99,
-      discount: 44,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S7",
-      category: "Mujer",
-    },
-    {
-      id: 8,
-      name: "Gafas de Sol",
-      originalPrice: 39.99,
-      salePrice: 19.99,
-      discount: 50,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S8",
-      category: "Accesorios",
-    },
-    {
-      id: 9,
-      name: "Sudadera Comfort",
-      originalPrice: 49.99,
-      salePrice: 34.99,
-      discount: 30,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S9",
-      category: "Hombre",
-    },
-    {
-      id: 10,
-      name: "Blusa Elegante",
-      originalPrice: 39.99,
-      salePrice: 24.99,
-      discount: 38,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S10",
-      category: "Mujer",
-    },
-    {
-      id: 11,
-      name: "Cinturón Clásico",
-      originalPrice: 29.99,
-      salePrice: 19.99,
-      discount: 33,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S11",
-      category: "Accesorios",
-    },
-    {
-      id: 12,
-      name: "Pantalón Chino",
-      originalPrice: 54.99,
-      salePrice: 34.99,
-      discount: 36,
-      imageSrc: "/placeholder.svg?height=300&width=300&text=S12",
-      category: "Hombre",
-    },
-  ];
-
   return (
     <main className="flex flex-col min-h-screen">
       {/* Banner de ofertas */}
       <section className="relative h-[200px] md:h-[300px]">
         <Image
-          src="/placeholder.svg?height=300&width=1200&text=Ofertas+Especiales"
+          src={getStrapiMedia(products[1].image?.url) || "/placeholder.jpg"}
           alt="Ofertas Especiales"
           fill
           className="object-cover"
@@ -264,7 +155,7 @@ export default function SalesPage() {
               <div className="flex items-center">
                 <h2 className="text-xl font-bold">Ofertas</h2>
                 <span className="ml-2 text-sm text-gray-500">
-                  ({products.length} artículos)
+                  ({meta.pagination.total} artículos)
                 </span>
               </div>
 
@@ -310,82 +201,51 @@ export default function SalesPage() {
             {/* Grid de productos */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {products.map((product) => (
-                <div
+                <ProductCard
                   key={product.id}
-                  className="group relative overflow-hidden rounded-lg border"
-                >
-                  <Link
-                    href={`/producto/${product.name
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}-${product.id}`}
-                    className="absolute inset-0 z-10"
-                  >
-                    <span className="sr-only">Ver detalles</span>
-                  </Link>
-                  <div className="absolute top-2 right-2 z-20">
-                    <Badge className="bg-red-500 hover:bg-red-600">
-                      -{product.discount}%
-                    </Badge>
-                  </div>
-                  <div className="relative aspect-square overflow-hidden">
-                    <Image
-                      src={product.imageSrc || "/placeholder.svg"}
-                      alt={product.name}
-                      width={300}
-                      height={300}
-                      className="object-cover transition-transform group-hover:scale-105"
-                    />
-                    <Button
-                      size="icon"
-                      variant="secondary"
-                      className="absolute bottom-2 right-2 h-8 w-8 rounded-full z-20"
-                    >
-                      <Tag className="h-4 w-4" />
-                      <span className="sr-only">Ver oferta</span>
-                    </Button>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-medium">{product.name}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="font-bold">
-                        ${product.salePrice.toFixed(2)}
-                      </span>
-                      <span className="text-sm text-gray-500 line-through">
-                        ${product.originalPrice.toFixed(2)}
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {product.category}
-                    </p>
-                  </div>
-                </div>
+                  name={product.name}
+                  price={product.price}
+                  originalPrice={product.originalPrice}
+                  imageSrc={getStrapiMedia(product.image?.url)}
+                  href={`/ofertas/${product.id}`} // Enlace a la página de detalles de la oferta
+                />
               ))}
             </div>
 
+            {/* Mensaje si no hay productos */}
+            {products.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-gray-500">
+                  No hay ofertas disponibles en este momento.
+                </p>
+              </div>
+            )}
+
             {/* Paginación */}
-            <div className="flex justify-center mt-12">
-              <nav className="flex items-center gap-1">
-                <Button variant="outline" size="icon" disabled>
-                  <ChevronRight className="h-4 w-4 rotate-180" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-primary text-primary-foreground"
-                >
-                  1
-                </Button>
-                <Button variant="outline" size="sm">
-                  2
-                </Button>
-                <Button variant="outline" size="sm">
-                  3
-                </Button>
-                <Button variant="outline" size="icon">
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </nav>
-            </div>
+            {meta.pagination.pageCount > 1 && (
+              <div className="flex justify-center mt-12">
+                <nav className="flex items-center gap-1">
+                  <Button variant="outline" size="icon" disabled>
+                    <ChevronRight className="h-4 w-4 rotate-180" />
+                  </Button>
+                  {Array.from({ length: meta.pagination.pageCount }, (_, i) => (
+                    <Button
+                      key={i + 1}
+                      variant="outline"
+                      size="sm"
+                      className={
+                        i === 0 ? "bg-primary text-primary-foreground" : ""
+                      }
+                    >
+                      {i + 1}
+                    </Button>
+                  ))}
+                  <Button variant="outline" size="icon">
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </nav>
+              </div>
+            )}
           </div>
         </div>
       </div>
