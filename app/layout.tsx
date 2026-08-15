@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
+import { CartProvider } from "@/context/CartContext"; // 🛒 Importamos el proveedor global
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,15 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning = {true} >
+    <html lang="es" suppressHydrationWarning={true}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`} 
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="relative flex min-h-screen flex-col">
-          <Header />
-          {children}
-        </div>
-        
+        <CartProvider>
+          <div className="relative flex min-h-screen flex-col">
+            <Header />
+            {children}
+          </div>
+        </CartProvider>
       </body>
     </html>
   );

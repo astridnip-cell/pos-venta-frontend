@@ -48,13 +48,14 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col min-h-screen">
+      
       {/* Hero Section */}
       <section className="py-12 md:py-16">
         <div className="container px-4 md:px-16">
           <div className="flex flex-col items-center text-center mb-8">
             <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
               Ropa personalizada Diseñada Para{" "}
-              <span className="bg-yellow-300 px-1">Tu Estilo</span>
+              <span className="bg-fuchsia-500 text-white px-2 py-1 rounded-xl">Tu Estilo</span>
             </h1>
             <p className="mt-4 max-w-[700px] text-gray-500 text-sm">
               Cada prenda está confeccionada con los mejores materiales,
@@ -66,13 +67,13 @@ export default async function Home() {
             {/* Imagen Principal (Primer producto de Strapi) */}
             <div className="md:col-span-7 relative">
               <Image
-                src={getStrapiMedia(featuredProducts[0]?.image?.url)}
-                alt={featuredProducts[0]?.name || "Producto destacado"}
-                width={800}
-                height={500}
-                className="rounded-lg object-cover w-full h-[400px] shadow-2xl"
-                priority 
-              />
+              src={getStrapiMedia(featuredProducts[0]?.image?.url) || "/modelo.png"}
+              alt={featuredProducts[0]?.name || "Producto destacado"}
+              width={800}
+              height={500}
+              className="rounded-lg object-contain w-full h-[600px] shadow-2xl"
+              priority
+            />
             </div>
 
             {/* Detalles del producto destacado */}
@@ -118,6 +119,7 @@ export default async function Home() {
                 key={product.id}
                 name={product.name}
                 price={product.price}
+                originalPrice={product.price}
                 imageSrc={getStrapiMedia(product.image?.url)}
                 href={`/producto/${product.slug}`}
               />

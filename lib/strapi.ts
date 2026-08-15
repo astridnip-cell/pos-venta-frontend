@@ -27,5 +27,6 @@ export async function getProducts(params: any = {}) {
   let query = '/products?populate=*';
   if (params.featured) query += `&filters[featured][$eq]=true`;
   if (params.limit) query += `&pagination[pageSize]=${params.limit}`;
+  if (params.category) query += `&filters[category][slug][$eq]=${params.category}`;
   return await fetchAPI(query);
 }

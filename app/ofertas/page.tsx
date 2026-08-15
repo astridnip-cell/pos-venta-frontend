@@ -24,6 +24,7 @@ import { getProducts, getStrapiMedia } from "@/lib/strapi";
 // Página de Ofertas
 export default async function SalesPage() {
   const { data: products, meta } = await getProducts({ category: "ofertas" });
+
   // En una implementación real, estos datos vendrían de Strapi
   const categories = [
     { name: "Hombre", count: 5 },
@@ -57,7 +58,7 @@ export default async function SalesPage() {
       {/* Banner de ofertas */}
       <section className="relative h-[200px] md:h-[300px]">
         <Image
-          src={getStrapiMedia(products[1].image?.url) || "/placeholder.jpg"}
+          src={getStrapiMedia(products[2].image?.url) || "/placeholder.jpg"}
           alt="Ofertas Especiales"
           fill
           className="object-cover"
@@ -200,7 +201,7 @@ export default async function SalesPage() {
 
             {/* Grid de productos */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {products.map((product) => (
+              {products.map((product: any) => (
                 <ProductCard
                   key={product.id}
                   name={product.name}

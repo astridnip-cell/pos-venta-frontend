@@ -37,7 +37,11 @@ export function Header() {
         {/* LOGO: Prioridad a tu texto original */}
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="font-bold text-xl">pos-venta-frontend</span>
+            <img 
+              src="/logo-velora.png" 
+              alt="Logo Velora" 
+              className="h-10 w-auto object-contain" 
+            />
           </Link>
         </div>
 

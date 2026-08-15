@@ -19,9 +19,15 @@ import {
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ProductCard } from "@/components/product-card";
+import { getProducts, getStrapiMedia } from "@/lib/strapi";
 
-// Página de categoría Mujer
-export default function WomenPage() {
+// Página de categoría mujer
+export default async function  WomenPage() {
+  
+//Obtener los datos de strapi
+  const { data: products, meta } = await getProducts({ category: "mujer" });
+  console.log("Productos en la página:", products); 
+  
   // En una implementación real, estos datos vendrían de Strapi
   const categories = [
     { name: "Camisetas", count: 38 },
@@ -49,7 +55,7 @@ export default function WomenPage() {
       options: ["Algodón", "Lino", "Poliéster", "Mezcla", "Seda"],
     },
   ];
-
+/*
   const products = [
     {
       id: 1,
@@ -124,13 +130,13 @@ export default function WomenPage() {
       imageSrc: "/placeholder.svg?height=300&width=300&text=W12",
     },
   ];
-
+*/
   return (
     <main className="flex flex-col min-h-screen">
       {/* Banner de categoría */}
       <section className="relative h-[200px] md:h-[300px]">
         <Image
-          src="/placeholder.svg?height=300&width=1200&text=Moda+Mujer"
+          src={getStrapiMedia(products[0].image?.url) || "/placeholder.jpg"}
           alt="Moda Mujer"
           fill
           className="object-cover"
@@ -272,12 +278,13 @@ export default function WomenPage() {
 
             {/* Grid de productos */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {products.map((product) => (
+              {products.map((product: any) => (
                 <ProductCard
                   key={product.id}
                   name={product.name}
                   price={product.price}
-                  imageSrc={product.imageSrc}
+                  originalPrice={product.price}
+                  imageSrc={`http://localhost:1337${product.image?.url}`}
                   href={`/producto/vestido-casual-${product.id}`}
                 />
               ))}
