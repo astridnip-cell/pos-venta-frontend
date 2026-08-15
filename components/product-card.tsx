@@ -9,19 +9,21 @@ import { useCart } from "@/context/CartContext";
 const { addToCart } = useCart();
 
 export function ProductCard({
+  id, // 🆔 Añadimos el id en las propiedades
   name,
   price,
   originalPrice,
   imageSrc,
   href,
 }: {
+  id: number;
   name: string;
   price: number;
   originalPrice: number | null;
   imageSrc: string;
   href?: string;
 }) {
-  const { addToCart } = useCart(); // 🛒 El gancho va aquí dentro
+  const { addToCart } = useCart();
 
   const CardContent = () => (
     <div className="group relative overflow-hidden rounded-lg border">
@@ -38,7 +40,7 @@ export function ProductCard({
           size="icon"
           variant="secondary"
           className="absolute bottom-2 right-2 h-8 w-8 rounded-full z-20"
-          onClick={() => addToCart({ name, price, imageSrc })}
+          onClick={() => addToCart({id, name, price, imageSrc })}
         >
           <ShoppingCart className="h-4 w-4" />
           <span className="sr-only">Añadir al carrito</span>
