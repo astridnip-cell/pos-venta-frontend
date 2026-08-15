@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 
+const { addToCart } = useCart();
 
 export function ProductCard({
   name,
@@ -17,6 +21,8 @@ export function ProductCard({
   imageSrc: string;
   href?: string;
 }) {
+  const { addToCart } = useCart(); // 🛒 El gancho va aquí dentro
+
   const CardContent = () => (
     <div className="group relative overflow-hidden rounded-lg border">
       <div className="absolute inset-0 z-10" aria-hidden="true"></div>
@@ -32,6 +38,7 @@ export function ProductCard({
           size="icon"
           variant="secondary"
           className="absolute bottom-2 right-2 h-8 w-8 rounded-full z-20"
+          onClick={() => addToCart({ name, price, imageSrc })}
         >
           <ShoppingCart className="h-4 w-4" />
           <span className="sr-only">Añadir al carrito</span>
