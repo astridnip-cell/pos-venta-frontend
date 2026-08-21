@@ -1,3 +1,6 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "css.validate": false,
+    "scss.validate": false,
+    "js/ts.tsdk.path": "node_modules\\typescript\\lib"
 }

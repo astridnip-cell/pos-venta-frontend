@@ -201,15 +201,18 @@ export default async function MenPage() {
 
             {/* Grid de productos */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+
               {products.map((product: any) => (
                 <ProductCard
-                  key={product.id}
-                  name={product.name}
-                  price={product.price}
-                  originalPrice={product.originalPrice}
-                  imageSrc={getStrapiMedia(product.image?.url)}
-                  href={`/producto/${product.slug}`}
-                />
+                id={product.id}
+                key={product.id}
+                name={product.name}
+                price={product.price}
+                originalPrice={product.originalPrice}
+                imageSrc={getStrapiMedia(product.image?.url)}
+                href={`/producto/${product.slug}`}
+              />
               ))}
             </div>
 
