@@ -1,22 +1,21 @@
-"use client"; //
+"use client";
 
-import Link from "next/link"; //
+import Link from "next/link";
 import { useState } from "react";
 import { ShoppingCart, Menu, X, Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-interface Product {
-  id: number | string;
-  name: string;
-  price: number;
-  slug: string;
-  image?: { url: string };
-}
-
+import { useCart } from "@/context/CartContext";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  
+  const cartContext = useCart() as any;
+  const items = cartContext.items || cartContext.cart || [];
+
+  // Calculamos el total sumando las cantidades tipando explícitamente el acumulador
+  const totalItems = items.reduce((sum: number, item: any) => sum + (item.quantity || 1), 0);
 
   return (
     <header className="w-full p-4 border-b">
@@ -27,14 +26,14 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setIsMenuOpen(!isMenuOpen)} //
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             <span className="sr-only">Abrir Menú</span>
           </Button>
         </div>
 
-        {/* LOGO: Prioridad a tu texto original */}
+        {/* LOGO */}
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2">
             <img 
@@ -64,17 +63,24 @@ export function Header() {
             <User className="h-5 w-5" />
             <span className="sr-only">Cuenta</span>
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="relative rounded-full" //
-          >
-            <ShoppingCart className="h-5 w-5" />
-            <span className="sr-only">Carrito</span>
-            <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-green-500 text-[10px] font-bold text-white flex items-center justify-center">
-              3
-            </span>
-          </Button>
+
+          {/* CARRITO CONECTADO */}
+          <Link href="/carrito">
+            <Button
+              variant="outline"
+              size="icon"
+              className="relative rounded-full cursor-pointer"            >
+              <ShoppingCart className="h-5 w-5" />
+              <span className="sr-only">Carrito</span>
+              
+              {/* Muestra el contador dinámico si hay productos */}
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-black text-[10px] font-bold text-white flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -86,7 +92,6 @@ export function Header() {
               <Input type="search" placeholder="Buscar productos..." className="w-full" />
             </div>
 
-            {/* Navegación móvil corregida en un solo bloque */}
             <nav className="grid gap-6">
               <Link href="/" className="text-lg font-medium" onClick={() => setIsMenuOpen(false)}>Inicio</Link>
               <Link href="/hombre" className="text-lg font-medium" onClick={() => setIsMenuOpen(false)}>Hombre</Link>

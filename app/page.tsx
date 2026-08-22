@@ -128,9 +128,9 @@ export default async function Home() {
             ))}
           </div>
           <div className="flex flex-wrap justify-center gap-4 mt-12">
-            <Link href="/mujer"><Button variant="outline" className="rounded-full px-6">Ver sección Mujer <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
-            <Link href="/hombre"><Button variant="outline" className="rounded-full px-6">Ver sección Hombre <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
-            <Link href="/accesorios"><Button variant="outline" className="rounded-full px-6">Ver sección Accesorios <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
+            <Link href="/mujer"><Button className="rounded-full px-6">Ver sección Mujer <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
+            <Link href="/hombre"><Button className="rounded-full px-6">Ver sección Hombre <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
+            <Link href="/accesorios"><Button className="rounded-full px-6">Ver sección Accesorios <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
           </div>
         </div>
       </section>

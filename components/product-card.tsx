@@ -12,55 +12,53 @@ export function ProductCard({
   price,
   originalPrice,
   imageSrc,
-  href,
+  href = "#",
 }: {
   id: number;
-  name: string;
+  name: number | string; // por si acaso
   price: number;
-  originalPrice: number | null;
+  originalPrice?: number | null;
   imageSrc: string;
   href?: string;
 }) {
   const { addToCart } = useCart();
 
-  const CardContent = () => (
-    <div className="group relative overflow-hidden rounded-[30px] border bg-white shadow-sm transition-all hover:shadow-md">
-      <div className="relative h-72 w-full overflow-hidden bg-gray-50 rounded-t-[30px] flex items-center justify-center p-2">
+  return (
+    <div className="group relative overflow-hidden rounded-[30px] border bg-white shadow-sm transition-all hover:shadow-md flex flex-col">
+      {/* Contenedor de la imagen con enlace opcional */}
+      <Link href={href} className="relative h-72 w-full overflow-hidden bg-gray-50 rounded-t-[30px] flex items-center justify-center p-2 block">
         <Image
           src={imageSrc || "/placeholder.svg"}
-          alt={name}
+          alt={String(name)}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
           className="object-contain object-center transition-transform duration-300 group-hover:scale-105"
         />
-        <Button
-          size="icon"
-          variant="secondary"
-          className="absolute bottom-3 right-3 h-9 w-9 rounded-full z-20 shadow-md"
-          onClick={(e: React.MouseEvent) => {
-            e.preventDefault();
-            addToCart({ id, name, price, imageSrc });
-          }}
-        >
-          <ShoppingCart className="h-4 w-4" />
-          <span className="sr-only">Añadir al carrito</span>
-        </Button>
-      </div>
+      </Link>
 
-      <div className="p-4 text-center">
-        <h3 className="font-medium text-gray-900 truncate">{name}</h3>
+      {/* Botón flotante del carrito absolutamente seguro */}
+      <Button
+        size="icon"
+        variant="secondary"
+        className="absolute top-4 right-4 h-9 w-9 rounded-full z-30 shadow-md bg-black text-white hover:bg-gray-800"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          addToCart({ id, name: String(name), price, imageSrc });
+          console.log("¡Añadido al carrito con éxito!", { id, name });
+        }}
+      >
+        <ShoppingCart className="h-4 w-4" />
+        <span className="sr-only">Añadir al carrito</span>
+      </Button>
+
+      {/* Información del producto con enlace al detalle */}
+      <div className="p-4 text-center flex-1 flex flex-col justify-between">
+        <Link href={href}>
+          <h3 className="font-medium text-gray-900 truncate hover:underline">{name}</h3>
+        </Link>
         <p className="font-bold text-gray-900 mt-1">${price.toFixed(2)}</p>
       </div>
     </div>
   );
-
-  if (href) {
-    return (
-      <Link href={href} className="block">
-        <CardContent />
-      </Link>
-    );
-  }
-
-  return <CardContent />;
 }
