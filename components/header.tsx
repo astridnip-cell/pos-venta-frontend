@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ShoppingCart, Menu, X, Search, User } from "lucide-react";
+import { ShoppingCart, Menu, X, Search, User, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/CartContext";
@@ -43,8 +43,8 @@ export function Header() {
           </Link>
         </div>
 
-        {/* NAVEGACIÓN ESCRITORIO (Desktop) */}
-        <nav className="hidden md:flex items-center space-x-8">
+        {/* Desktop */}
+        <nav className="hidden md:flex items-center space-x-12">
           <Link href="/" className="text-sm font-medium hover:text-primary">Inicio</Link>
           <Link href="/hombre" className="text-sm font-medium hover:text-primary">Hombre</Link>
           <Link href="/mujer" className="text-sm font-medium hover:text-primary">Mujer</Link>
@@ -54,16 +54,31 @@ export function Header() {
 
         {/* ICONOS DERECHA */}
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="hidden md:flex">
-            <Search className="h-5 w-5" />
-            <span className="sr-only">Buscar</span>
-          </Button>
-          <Button variant="ghost" size="icon" className="hidden md:flex">
-            <User className="h-5 w-5" />
-            <span className="sr-only">Cuenta</span>
-          </Button>
+          <Link 
+            href="/favoritos" 
+            className="p-2 text-gray-700 hover:text-red-500 transition-colors group flex items-center justify-center"
+            aria-label="Favoritos"
+          >
+            <Heart className="h-6 w-6 stroke-[1.5]" />
+          </Link>
+        
+          <button 
+            className="p-2 text-gray-700 hover:text-black transition-colors flex items-center justify-center"
+            aria-label="Buscar"
+          >
+            <Search className="h-6 w-6 stroke-[1.5]" />
+          </button>
+          
+          
+          <Link 
+            href="/perfil" 
+            className="p-2 text-gray-700 hover:text-black transition-colors flex items-center justify-center"
+            aria-label="Cuenta"
+          >
+            <User className="h-6 w-6 stroke-[1.5]" />
+          </Link>
 
-          {/* El Link para que Next.js navegue sin bloqueos */}
+        
           <Button
             variant="outline"
             size="icon"
@@ -74,7 +89,7 @@ export function Header() {
               <ShoppingCart className="h-5 w-5" />
               <span className="sr-only">Carrito</span>
               
-              {/* Muestra el contador dinámico si hay productos */}
+              
               {totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-black text-[10px] font-bold text-white flex items-center justify-center">
                   {totalItems}
@@ -85,7 +100,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* MENÚ MÓVIL DESPLEGABLE */}
+      {/* Movil */}
       {isMenuOpen && (
         <div className="fixed inset-0 top-16 z-50 bg-background md:hidden p-4">
           <div className="container">
@@ -93,7 +108,7 @@ export function Header() {
               <Input type="search" placeholder="Buscar productos..." className="w-full" />
             </div>
 
-            <nav className="grid gap-6">
+            <nav className="grid gap-12">
               <Link href="/" className="text-lg font-medium" onClick={() => setIsMenuOpen(false)}>Inicio</Link>
               <Link href="/hombre" className="text-lg font-medium" onClick={() => setIsMenuOpen(false)}>Hombre</Link>
               <Link href="/mujer" className="text-lg font-medium" onClick={() => setIsMenuOpen(false)}>Mujer</Link>

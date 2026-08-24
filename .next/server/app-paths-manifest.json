@@ -1,10 +1,8 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/accesorios/page": "app/accesorios/page.js",
   "/carrito/page": "app/carrito/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/favoritos/page": "app/favoritos/page.js",
   "/hombre/page": "app/hombre/page.js",
   "/mujer/page": "app/mujer/page.js",
-  "/ofertas/page": "app/ofertas/page.js",
   "/page": "app/page.js"
 }
