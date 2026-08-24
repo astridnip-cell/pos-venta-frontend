@@ -10,11 +10,10 @@ import { useCart } from "@/context/CartContext";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  
   const cartContext = useCart() as any;
   const items = cartContext.items || cartContext.cart || [];
 
-  // Calculamos el total sumando las cantidades tipando explícitamente el acumulador
+  // Total
   const totalItems = items.reduce((sum: number, item: any) => sum + (item.quantity || 1), 0);
 
   return (
@@ -64,12 +63,14 @@ export function Header() {
             <span className="sr-only">Cuenta</span>
           </Button>
 
-          {/* CARRITO CONECTADO */}
-          <Link href="/carrito">
-            <Button
-              variant="outline"
-              size="icon"
-              className="relative rounded-full cursor-pointer"            >
+          {/* El Link para que Next.js navegue sin bloqueos */}
+          <Button
+            variant="outline"
+            size="icon"
+            className="relative rounded-full cursor-pointer"
+            asChild 
+          >
+            <Link href="/carrito">
               <ShoppingCart className="h-5 w-5" />
               <span className="sr-only">Carrito</span>
               
@@ -79,8 +80,8 @@ export function Header() {
                   {totalItems}
                 </span>
               )}
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
 

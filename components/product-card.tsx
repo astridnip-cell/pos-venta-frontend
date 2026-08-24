@@ -10,49 +10,60 @@ export function ProductCard({
   id,
   name,
   price,
-  originalPrice,
   imageSrc,
   href = "#",
 }: {
-  id: number;
-  name: number | string; // por si acaso
+  id: number | string;
+  name: string;
   price: number;
-  originalPrice?: number | null;
   imageSrc: string;
   href?: string;
 }) {
   const { addToCart } = useCart();
 
   return (
-    <div className="group relative overflow-hidden rounded-[30px] border bg-white shadow-sm transition-all hover:shadow-md flex flex-col">
-      {/* Contenedor de la imagen con enlace opcional */}
-      <Link href={href} className="relative h-72 w-full overflow-hidden bg-gray-50 rounded-t-[30px] flex items-center justify-center p-2 block">
-        <Image
-          src={imageSrc || "/placeholder.svg"}
-          alt={String(name)}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-contain object-center transition-transform duration-300 group-hover:scale-105"
-        />
-      </Link>
+    <div className="relative overflow-hidden rounded-[30px] border bg-white shadow-sm transition-all hover:shadow-md flex flex-col">
+      
+      <div className="relative h-72 w-full bg-gray-50 rounded-t-[30px] flex items-center justify-center p-2">
+        
+        
+        <Link href={href} className="group absolute inset-0 overflow-hidden flex items-center justify-center">
+          <Image
+            src={imageSrc || "/placeholder.svg"}
+            alt={name}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-contain object-center transition-transform duration-300 group-hover:scale-105"
+          />
+        </Link>
 
-      {/* Botón flotante del carrito absolutamente seguro */}
-      <Button
-        size="icon"
-        variant="secondary"
-        className="absolute top-4 right-4 h-9 w-9 rounded-full z-30 shadow-md bg-black text-white hover:bg-gray-800"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          addToCart({ id, name: String(name), price, imageSrc });
-          console.log("¡Añadido al carrito con éxito!", { id, name });
-        }}
-      >
-        <ShoppingCart className="h-4 w-4" />
-        <span className="sr-only">Añadir al carrito</span>
-      </Button>
+        {/* Botón flotante independiente */}
+        <div className="absolute top-4 right-4 z-50">
+          <Button
+            type="button"
+            size="icon"
+            variant="secondary"
+            className="h-9 w-9 rounded-full shadow-md bg-black text-white hover:bg-black/80 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              addToCart({
+                id: Number(id),
+                name,
+                price,
+                imageSrc,
+              });
+              
+              console.log("Producto agregado correctamente:", { id, name, price });
+            }}
+          >
+            <ShoppingCart className="h-4 w-4 pointer-events-none" />
+            <span className="sr-only">Añadir al carrito</span>
+          </Button>
+        </div>
+      </div>
 
-      {/* Información del producto con enlace al detalle */}
       <div className="p-4 text-center flex-1 flex flex-col justify-between">
         <Link href={href}>
           <h3 className="font-medium text-gray-900 truncate hover:underline">{name}</h3>
