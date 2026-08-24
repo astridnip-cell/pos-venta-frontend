@@ -18,7 +18,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ProductCard } from "@/components/product-card";
+import { ProductCard }  from "@/components/product-card";
 import { getProducts, getStrapiMedia } from "@/lib/strapi";
 
 // Página de categoría Hombre
@@ -205,14 +205,9 @@ export default async function MenPage() {
 
               {products.map((product: any) => (
                 <ProductCard
-                id={product.id}
-                key={product.id}
-                name={product.name}
-                price={product.price}
-                originalPrice={product.originalPrice}
-                imageSrc={getStrapiMedia(product.image?.url)}
-                href={`/producto/${product.slug}`}
-              />
+                  key={product.id}
+                  product={product}
+                />
               ))}
             </div>
 

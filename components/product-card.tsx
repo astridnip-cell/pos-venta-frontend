@@ -1,74 +1,105 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 
-export function ProductCard({
-  id,
-  name,
-  price,
-  imageSrc,
-  href = "#",
-}: {
-  id: number | string;
-  name: string;
-  price: number;
-  imageSrc: string;
-  href?: string;
-}) {
+export function ProductCard(props: any) {
+  const product = props.product || props;
+
   const { addToCart } = useCart();
+  const { addToWishlist, isInWishlist } = useWishlist();
+  
+  const productId = product?.id ?? 0;
+  const isFavorite = isInWishlist(productId);
+
+  // Lógica segura para extraer la URL de la imagen y anteponer el servidor de Strapi si es necesario
+  let imageUrl = "/placeholder.svg";
+  const rawImage = product.imageSrc || product.image || product.imageUrl;
+
+  if (typeof rawImage === "string") {
+    imageUrl = rawImage.startsWith("/uploads") 
+      ? `http://localhost:1337${rawImage}` 
+      : rawImage;
+  } else if (rawImage?.url) {
+    imageUrl = rawImage.url.startsWith("/uploads") 
+      ? `http://localhost:1337${rawImage.url}` 
+      : rawImage.url;
+  } else if (rawImage?.data?.attributes?.url) {
+    const strapiUrl = rawImage.data.attributes.url;
+    imageUrl = strapiUrl.startsWith("/uploads") 
+      ? `http://localhost:1337${strapiUrl}` 
+      : strapiUrl;
+  }
+
+  // Icono de carrito personalizado (con los dos puntos abajo)
+  const CustomCartIcon = () => (
+    <svg 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      className="stroke-current"
+    >
+      <path d="M6 6h15l-1.5 9H7.5L6 6Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="9" cy="19" r="1" fill="currentColor"/>
+      <circle cx="17" cy="19" r="1" fill="currentColor"/>
+    </svg>
+  );
 
   return (
-    <div className="relative overflow-hidden rounded-[30px] border bg-white shadow-sm transition-all hover:shadow-md flex flex-col">
-      
-      <div className="relative h-72 w-full bg-gray-50 rounded-t-[30px] flex items-center justify-center p-2">
-        
-        
-        <Link href={href} className="group absolute inset-0 overflow-hidden flex items-center justify-center">
-          <Image
-            src={imageSrc || "/placeholder.svg"}
-            alt={name}
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
-            className="object-contain object-center transition-transform duration-300 group-hover:scale-105"
-          />
-        </Link>
+    <div className="group border rounded-lg p-4 bg-white shadow-sm hover:shadow-md transition-all duration-300 flex flex-col">
+      {/* Contenedor de la imagen y los iconos flotantes */}
+      <div className="relative w-full h-60 mb-4 overflow-hidden rounded-md bg-gray-100">
+        <Image
+          src={imageUrl}
+          alt={product.name || "Producto"}
+          fill
+          className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+          unoptimized // Útil para imágenes externas de Strapi en desarrollo
+        />
 
-        {/* Botón flotante independiente */}
-        <div className="absolute top-4 right-4 z-50">
-          <Button
-            type="button"
-            size="icon"
-            variant="secondary"
-            className="h-9 w-9 rounded-full shadow-md bg-black text-white hover:bg-black/80 cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              
-              addToCart({
-                id: Number(id),
-                name,
-                price,
-                imageSrc,
-              });
-              
-              console.log("Producto agregado correctamente:", { id, name, price });
-            }}
-          >
-            <ShoppingCart className="h-4 w-4 pointer-events-none" />
-            <span className="sr-only">Añadir al carrito</span>
-          </Button>
-        </div>
+        {/* 1. Botón de Favorito (Corazón) */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            addToWishlist(product);
+          }}
+          className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white shadow-sm transition-all duration-200 ease-in-out active:scale-95"
+          aria-label="Añadir a favoritos"
+        >
+          <Heart
+            className={`h-5 w-5 transition-colors duration-300 ${
+              isFavorite 
+                ? "fill-red-500 text-red-500" 
+                : "text-red-500 hover:fill-red-100"
+            }`}
+          />
+        </button>
+
+        {/* 2. Botón de Carrito (Icono personalizado abajo a la derecha) */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            addToCart(product);
+          }}
+          className="absolute bottom-3 right-3 z-10 p-3 rounded-full bg-black/70 backdrop-blur-sm text-white hover:bg-black shadow-lg transition-all duration-200 ease-in-out hover:scale-110 active:scale-100"
+          aria-label="Añadir al carrito"
+        >
+          <CustomCartIcon />
+        </button>
       </div>
 
-      <div className="p-4 text-center flex-1 flex flex-col justify-between">
-        <Link href={href}>
-          <h3 className="font-medium text-gray-900 truncate hover:underline">{name}</h3>
-        </Link>
-        <p className="font-bold text-gray-900 mt-1">${price.toFixed(2)}</p>
+      {/* Información del producto */}
+      <div className="flex flex-col flex-grow justify-end">
+        <h3 className="font-medium text-lg text-gray-900 mb-1 truncate group-hover:text-black transition-colors">
+          {product.name || "Producto sin nombre"}
+        </h3>
+        <p className="text-gray-900 font-bold text-xl">
+          ${Number(product.price || 0).toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </p>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-"use client"; // Esta línea es necesaria porque usaremos estados de React
+"use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
@@ -8,15 +8,17 @@ interface Product {
   name: string;
   price: number;
   imageSrc: string;
+  quantity?: number;
 }
 
 // Acciones de carrito
 interface CartContextType {
   cartItems: Product[];
   addToCart: (product: Product) => void;
+  removeFromCart: (id: number) => void;
 }
 
-// 3. CCajita global
+// Cajita global
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 // Proveedor
@@ -27,8 +29,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCartItems((prev) => [...prev, product]);
   };
 
+  // Borrar el producto filtrando por su id
+  const removeFromCart = (id: number) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
