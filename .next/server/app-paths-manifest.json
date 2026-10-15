@@ -1,8 +1,1 @@
-{
-  "/carrito/page": "app/carrito/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/favoritos/page": "app/favoritos/page.js",
-  "/hombre/page": "app/hombre/page.js",
-  "/mujer/page": "app/mujer/page.js",
-  "/page": "app/page.js"
-}
+{}

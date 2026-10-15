@@ -70,13 +70,12 @@ export function Header() {
           </button>
           
           
-          <Link 
-            href="/perfil" 
+          <button 
             className="p-2 text-gray-700 hover:text-black transition-colors flex items-center justify-center"
             aria-label="Cuenta"
           >
             <User className="h-6 w-6 stroke-[1.5]" />
-          </Link>
+          </button>
 
         
           <Button
