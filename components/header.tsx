@@ -6,15 +6,14 @@ import { ShoppingCart, Menu, X, Search, User, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-  const cartContext = useCart() as any;
-  const items = cartContext.items || cartContext.cart || [];
 
-  // Total
-  const totalItems = items.reduce((sum: number, item: any) => sum + (item.quantity || 1), 0);
+  // Cantidad total de prendas en el carrito
+  const { totalItems } = useCart();
+  const { user } = useAuth();
 
   return (
     <header className="w-full p-4 border-b">
@@ -70,12 +69,14 @@ export function Header() {
           </button>
           
           
-          <button 
+          <Link
+            href="/cuenta"
             className="p-2 text-gray-700 hover:text-black transition-colors flex items-center justify-center"
-            aria-label="Cuenta"
+            aria-label={user ? `Cuenta de ${user.username}` : "Iniciar sesión"}
+            title={user ? user.username : "Iniciar sesión"}
           >
             <User className="h-6 w-6 stroke-[1.5]" />
-          </button>
+          </Link>
 
         
           <Button

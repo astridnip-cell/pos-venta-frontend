@@ -1,12 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { toList } from "@/lib/strapi";
 
 export function ProductCard(props: any) {
   const product = props.product || props;
+  const router = useRouter();
 
   const { addToCart } = useCart();
   const { addToWishlist, isInWishlist } = useWishlist();
@@ -32,6 +36,32 @@ export function ProductCard(props: any) {
       ? `http://localhost:1337${strapiUrl}` 
       : strapiUrl;
   }
+
+  // Enlace a la página de detalle (/producto/[slug])
+  const detailHref: string | null = product.slug
+    ? `/producto/${product.slug}`
+    : props.href?.startsWith("/producto/")
+    ? props.href
+    : null;
+
+  // Si el producto tiene tallas o colores, se elige en la página de detalle
+  const needsOptions =
+    toList(product.sizes).length > 0 || toList(product.colors).length > 0;
+
+  const handleAddToCart = () => {
+    if ((needsOptions || !product.documentId) && detailHref) {
+      router.push(detailHref);
+      return;
+    }
+    addToCart({
+      documentId: product.documentId,
+      id: product.id,
+      name: product.name,
+      price: Number(product.price) || 0,
+      imageSrc: imageUrl,
+      slug: product.slug,
+    });
+  };
 
   // Icono de carrito personalizado (con los dos puntos abajo)
   const CustomCartIcon = () => (
@@ -61,6 +91,15 @@ export function ProductCard(props: any) {
           unoptimized // Útil para imágenes externas de Strapi en desarrollo
         />
 
+        {/* Clic en la imagen: abre el detalle del producto */}
+        {detailHref && (
+          <Link
+            href={detailHref}
+            className="absolute inset-0"
+            aria-label={`Ver ${product.name || "producto"}`}
+          />
+        )}
+
         {/* 1. Botón de Favorito (Corazón) */}
         <button
           onClick={(e) => {
@@ -83,7 +122,7 @@ export function ProductCard(props: any) {
         <button
           onClick={(e) => {
             e.preventDefault();
-            addToCart(product);
+            handleAddToCart();
           }}
           className="absolute bottom-3 right-3 z-10 p-3 rounded-full bg-black/70 backdrop-blur-sm text-white hover:bg-black shadow-lg transition-all duration-200 ease-in-out hover:scale-110 active:scale-100"
           aria-label="Añadir al carrito"
@@ -95,7 +134,11 @@ export function ProductCard(props: any) {
       {/* Información del producto */}
       <div className="flex flex-col flex-grow justify-end">
         <h3 className="font-medium text-lg text-gray-900 mb-1 truncate group-hover:text-black transition-colors">
-          {product.name || "Producto sin nombre"}
+          {detailHref ? (
+            <Link href={detailHref}>{product.name || "Producto sin nombre"}</Link>
+          ) : (
+            product.name || "Producto sin nombre"
+          )}
         </h3>
         <p className="text-gray-900 font-bold text-xl">
           ${Number(product.price || 0).toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}

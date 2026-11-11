@@ -1,258 +1,116 @@
-import Image from "next/image";
+"use client";
+
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Filter, SlidersHorizontal } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { CheckCircle2, Clock, Loader2, XCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ProductCard } from "@/components/product-card";
-import { getProducts, getStrapiMedia } from "@/lib/strapi";
+import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
+import { verifyPayment } from "@/lib/api";
+import { formatCOP } from "@/lib/format";
 
-// Página de categoría Hombre
-export default async function MenPage() {
-  //Obtener los datos de strapi
-  const { data: products, meta } = await getProducts({ category: "hombre" });
+type Result = Awaited<ReturnType<typeof verifyPayment>>;
 
-  // En una implementación real, estos datos vendrían de Strapi
-  const categories = [
-    { name: "Camisetas", count: 42 },
-    { name: "Pantalones", count: 24 },
-    { name: "Sudaderas", count: 18 },
-    { name: "Chaquetas", count: 15 },
-    { name: "Accesorios", count: 30 },
-  ];
+// Wompi devuelve al cliente a /gracias?ref=<pedido>&id=<transacción>
+function ThanksContent() {
+  const searchParams = useSearchParams();
+  const reference = searchParams.get("ref");
+  const transactionId = searchParams.get("id");
 
-  const filters = [
-    {
-      name: "Color",
-      options: ["Negro", "Blanco", "Azul", "Gris", "Verde", "Rojo"],
-    },
-    {
-      name: "Talla",
-      options: ["XS", "S", "M", "L", "XL", "XXL"],
-    },
-    {
-      name: "Precio",
-      options: ["Menos de 20€", "20€ - 50€", "50€ - 100€", "Más de 100€"],
-    },
-    {
-      name: "Material",
-      options: ["Algodón", "Lino", "Poliéster", "Mezcla", "Denim"],
-    },
-  ];
+  const { jwt, isReady } = useAuth();
+  const { clearCart } = useCart();
+
+  const [result, setResult] = useState<Result | null>(null);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(Boolean(transactionId));
+
+  useEffect(() => {
+    if (!isReady || !transactionId) return;
+    if (!jwt) {
+      setError("Inicia sesión con la cuenta con la que compraste para ver el estado del pago.");
+      setIsLoading(false);
+      return;
+    }
+
+    verifyPayment(jwt, transactionId)
+      .then((data) => {
+        setResult(data);
+        if (data?.paymentStatus === "approved") clearCart();
+      })
+      .catch((err) => setError(err.message || "No se pudo consultar el pago."))
+      .finally(() => setIsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isReady, jwt, transactionId]);
+
+  const orderNumber = result?.orderNumber || reference;
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center py-24 gap-3 text-gray-500">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <p>Confirmando tu pago...</p>
+      </div>
+    );
+  }
+
+  let icon = <Clock className="h-14 w-14 text-yellow-500" />;
+  let title = "Estamos procesando tu pago";
+  let message = "Te avisaremos cuando se confirme el resultado del pago.";
+
+  if (result?.paymentStatus === "approved") {
+    icon = <CheckCircle2 className="h-14 w-14 text-green-600" />;
+    title = "¡Gracias por tu compra!";
+    message = "Tu pago fue aprobado y ya estamos preparando tu pedido.";
+  } else if (result && ["declined", "voided", "error"].includes(result.paymentStatus)) {
+    icon = <XCircle className="h-14 w-14 text-red-600" />;
+    title = "El pago no se pudo completar";
+    message = "Tu carrito sigue guardado: puedes intentarlo de nuevo.";
+  } else if (!transactionId) {
+    title = "Pedido recibido";
+    message = "Si ya pagaste, la confirmación puede tardar unos minutos.";
+  }
 
   return (
-    <main className="flex flex-col min-h-screen">
-      {/* Banner de categoría */}
-      <section className="relative h-[200px] md:h-[300px]">
-        <Image
-          src={getStrapiMedia(products[2].image?.url) || "/placeholder.jpg"}
-          alt="Moda Hombre"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-3xl md:text-5xl font-bold">Moda Hombre</h1>
-            <p className="mt-2 md:mt-4 text-sm md:text-base max-w-md mx-auto">
-              Descubre nuestra colección de ropa para hombre, diseñada para
-              combinar estilo y comodidad.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="max-w-lg mx-auto py-20 text-center space-y-4">
+      <div className="flex justify-center">{icon}</div>
+      <h1 className="text-2xl font-bold">{title}</h1>
+      <p className="text-gray-600">{message}</p>
+      {orderNumber && (
+        <p className="text-sm text-gray-500">
+          Número de pedido: <strong>{orderNumber}</strong>
+          {result?.total ? ` · Total: ${formatCOP(result.total)}` : ""}
+        </p>
+      )}
+      {error && <p className="text-sm text-red-600">{error}</p>}
 
-      {/* Breadcrumb */}
-      <div className="container px-4 py-4 md:px-6">
-        <nav className="flex text-sm text-gray-500">
-          <Link href="/" className="hover:text-gray-700">
-            Inicio
-          </Link>
-          <ChevronRight className="h-4 w-4 mx-2" />
-          <span className="text-gray-900 font-medium">Hombre</span>
-        </nav>
+      <div className="flex justify-center gap-3 pt-4">
+        {result && result.paymentStatus !== "approved" && result.paymentStatus !== "pending" ? (
+          <Button asChild>
+            <Link href="/carrito">Volver al carrito</Link>
+          </Button>
+        ) : (
+          <Button asChild>
+            <Link href="/">Seguir comprando</Link>
+          </Button>
+        )}
+        {error && (
+          <Button variant="outline" asChild>
+            <Link href="/cuenta">Iniciar sesión</Link>
+          </Button>
+        )}
       </div>
+    </div>
+  );
+}
 
-      {/* Contenido principal */}
-      <div className="container px-4 py-8 md:px-6">
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Sidebar con filtros - Versión escritorio */}
-          <div className="hidden md:block w-64 flex-shrink-0">
-            <div className="sticky top-20">
-              <h2 className="text-lg font-medium mb-4">Categorías</h2>
-              <ul className="space-y-2 mb-6">
-                {categories.map((category) => (
-                  <li key={category.name}>
-                    <Link
-                      href={`/hombre/${category.name.toLowerCase()}`}
-                      className="flex justify-between hover:text-primary"
-                    >
-                      <span>{category.name}</span>
-                      <span className="text-gray-500">({category.count})</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-
-              <Separator className="my-6" />
-
-              <h2 className="text-lg font-medium mb-4">Filtros</h2>
-
-              {filters.map((filter) => (
-                <Accordion
-                  key={filter.name}
-                  type="single"
-                  collapsible
-                  className="mb-4"
-                >
-                  <AccordionItem value={filter.name}>
-                    <AccordionTrigger className="text-base font-medium py-2">
-                      {filter.name}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="space-y-2 pt-1">
-                        {filter.options.map((option) => (
-                          <div
-                            key={option}
-                            className="flex items-center space-x-2"
-                          >
-                            <Checkbox id={`${filter.name}-${option}`} />
-                            <label
-                              htmlFor={`${filter.name}-${option}`}
-                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            >
-                              {option}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              ))}
-
-              <Button className="w-full mt-4">Aplicar filtros</Button>
-            </div>
-          </div>
-
-          {/* Contenido principal */}
-          <div className="flex-1">
-            {/* Controles de filtrado y ordenación */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-              <div className="flex items-center">
-                <h2 className="text-xl font-bold">Productos</h2>
-                <span className="ml-2 text-sm text-gray-500">
-                  ({meta.pagination.total} artículos)
-                </span>
-              </div>
-
-              <div className="flex items-center gap-4 w-full sm:w-auto">
-                {/* Botón de filtros móvil */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="md:hidden flex items-center gap-2"
-                >
-                  <Filter className="h-4 w-4" />
-                  Filtros
-                </Button>
-
-                {/* Selector de ordenación */}
-                <Select defaultValue="relevancia">
-                  <SelectTrigger className="w-full sm:w-[180px]">
-                    <SelectValue placeholder="Ordenar por" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="relevancia">Relevancia</SelectItem>
-                    <SelectItem value="precio-asc">
-                      Precio: menor a mayor
-                    </SelectItem>
-                    <SelectItem value="precio-desc">
-                      Precio: mayor a menor
-                    </SelectItem>
-                    <SelectItem value="nuevos">Más nuevos</SelectItem>
-                    <SelectItem value="populares">Más populares</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                {/* Selector de vista (grid/lista) */}
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="hidden sm:flex"
-                >
-                  <SlidersHorizontal className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Grid de productos */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  name={product.name}
-                  price={product.price}
-                  originalPrice={product.originalPrice}
-                  imageSrc={getStrapiMedia(product.image?.url)}
-                  href={`/producto/${product.slug}`}
-                />
-              ))}
-            </div>
-
-            {/* Si no hay productos, mostrar mensaje */}
-            {products.length === 50 && (
-              <div className="text-center py-16">
-                <h3 className="text-xl font-medium mb-2">
-                  No se encontraron productos
-                </h3>
-                <p className="text-gray-500">
-                  Intenta ajustar tus filtros o vuelve más tarde.
-                </p>
-              </div>
-            )}
-
-            {/* Paginación */}
-            {meta.pagination.pageCount > 1 && (
-              <div className="flex justify-center mt-12">
-                <nav className="flex items-center gap-1">
-                  <Button variant="outline" size="icon" disabled>
-                    <ChevronRight className="h-4 w-4 rotate-180" />
-                  </Button>
-                  {Array.from({ length: meta.pagination.pageCount }, (_, i) => (
-                    <Button
-                      key={i + 1}
-                      variant="outline"
-                      size="sm"
-                      className={
-                        i === 0 ? "bg-primary text-primary-foreground" : ""
-                      }
-                    >
-                      {i + 1}
-                    </Button>
-                  ))}
-                  <Button variant="outline" size="icon">
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </nav>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+export default function ThanksPage() {
+  return (
+    <main className="container px-4 md:px-6">
+      <Suspense fallback={null}>
+        <ThanksContent />
+      </Suspense>
     </main>
   );
 }
