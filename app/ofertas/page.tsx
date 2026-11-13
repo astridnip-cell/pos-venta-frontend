@@ -49,7 +49,7 @@ export default async function SalesPage() {
     },
     {
       name: "Precio final",
-      options: ["Menos de 20€", "20€ - 50€", "50€ - 100€", "Más de 100€"],
+      options: ["Menos de $50.000", "$50.000 - $100.000", "$100.000 - $200.000", "Más de $200.000"],
     },
   ];
 
@@ -58,7 +58,7 @@ export default async function SalesPage() {
       {/* Banner de ofertas */}
       <section className="relative h-[200px] md:h-[300px]">
         <Image
-          src={getStrapiMedia(products[2].image?.url) || "/placeholder.jpg"}
+          src={getStrapiMedia((products[2] ?? products[0])?.image?.url)}
           alt="Ofertas Especiales"
           fill
           className="object-cover"

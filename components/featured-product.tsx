@@ -43,11 +43,13 @@ export function FeaturedProduct({
             <div className="mt-8 flex items-center gap-4">
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl font-bold">
-                  ${formatCOP(displayPrice)}
+                  {formatCOP(displayPrice)}
                 </span>
-                <span className="text-lg text-gray-500 line-through">
-                  ${price.toFixed(2)}
-                </span>
+                {hasDiscount && (
+                  <span className="text-lg text-gray-500 line-through">
+                    {formatCOP(price)}
+                  </span>
+                )}
               </div>
               <Button className="gap-2">
                 <ShoppingCart className="h-4 w-4" />

@@ -23,9 +23,10 @@ export function formatCOP(price: number): string {
  * @param salePrice - precio de venta
  * @returns porcetaje de descuento (ej:25)
  */
-export function calculateDiscount (originalPrice : number, salePrice:number): number {
-    if (originalPrice || originalPrice <= salePrice) return 0;
-    return Math.round (((originalPrice - salePrice) / originalPrice) *100);
+export function calculateDiscount(originalPrice: number, salePrice: number): number {
+    // Sin precio original, o si no es mayor que el precio de venta, no hay descuento
+    if (!originalPrice || originalPrice <= salePrice) return 0;
+    return Math.round(((originalPrice - salePrice) / originalPrice) * 100);
 }
 /**
  * Formatea el descuento como texto
@@ -34,9 +35,9 @@ export function calculateDiscount (originalPrice : number, salePrice:number): nu
  * @returns texto del descuento (ej: "-25%")
  */
 
-export function formatDiscount (originalPrice: number, salePrice: number): string {;
-    const discount = calculateDiscount (originalPrice, salePrice);
-    return discount > 0 ? '-${discount}%' : '';
+export function formatDiscount(originalPrice: number, salePrice: number): string {
+    const discount = calculateDiscount(originalPrice, salePrice);
+    return discount > 0 ? `-${discount}%` : '';
 }
 
 /**

@@ -46,7 +46,7 @@ export default async function MenPage() {
     },
     {
       name: "Precio",
-      options: ["Menos de 20€", "20€ - 50€", "50€ - 100€", "Más de 100€"],
+      options: ["Menos de $50.000", "$50.000 - $100.000", "$100.000 - $200.000", "Más de $200.000"],
     },
     {
       name: "Material",
@@ -59,7 +59,7 @@ export default async function MenPage() {
       {/* Banner de categoría */}
       <section className="relative h-[200px] md:h-[300px]">
         <Image
-          src={getStrapiMedia(products[2].image?.url) || "/placeholder.jpg"}
+          src={getStrapiMedia((products[2] ?? products[0])?.image?.url)}
           alt="Moda Hombre"
           fill
           className="object-cover"
@@ -212,7 +212,7 @@ export default async function MenPage() {
             </div>
 
             {/* Si no hay productos, mostrar mensaje */}
-            {products.length === 50 && (
+            {products.length === 0 && (
               <div className="text-center py-16">
                 <h3 className="text-xl font-medium mb-2">
                   No se encontraron productos

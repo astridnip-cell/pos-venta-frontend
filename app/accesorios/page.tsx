@@ -46,7 +46,7 @@ export default async function AccesoriesPage() {
       <section className="relative h-[200px] md:h-[300px]">
         {/*Mostrar un banner de accesorios*/}
         <Image
-          src={getStrapiMedia(products?.[0]?.image?.url) || "/placeholder.jpg"}
+          src={getStrapiMedia(products?.[0]?.image?.url)}
           alt="Accesorios"
           fill
           className="object-cover"

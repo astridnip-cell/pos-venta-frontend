@@ -7,6 +7,7 @@ import { Heart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { toList } from "@/lib/strapi";
+import { formatCOP, formatDiscount } from "@/lib/format";
 
 export function ProductCard(props: any) {
   const product = props.product || props;
@@ -43,6 +44,9 @@ export function ProductCard(props: any) {
     : props.href?.startsWith("/producto/")
     ? props.href
     : null;
+
+  // Descuento: solo si el precio original es mayor que el precio actual (ej: "-25%")
+  const discountLabel = formatDiscount(Number(product.originalPrice) || 0, Number(product.price) || 0);
 
   // Si el producto tiene tallas o colores, se elige en la página de detalle
   const needsOptions =
@@ -140,9 +144,19 @@ export function ProductCard(props: any) {
             product.name || "Producto sin nombre"
           )}
         </h3>
-        <p className="text-gray-900 font-bold text-xl">
-          ${Number(product.price || 0).toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        </p>
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <p className="text-gray-900 font-bold text-xl">
+            {formatCOP(Number(product.price) || 0)}
+          </p>
+          {discountLabel && (
+            <>
+              <span className="text-sm text-gray-500 line-through">
+                {formatCOP(Number(product.originalPrice))}
+              </span>
+              <span className="text-xs font-semibold text-red-600">{discountLabel}</span>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
