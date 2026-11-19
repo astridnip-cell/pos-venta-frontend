@@ -48,6 +48,45 @@ export async function getProducts(params: any = {}) {
   return await fetchAPI(query);
 }
 
+/**
+ * Portada de la página de inicio para esta semana (hora de Colombia).
+ * Es la más reciente cuya semana ya empezó: si no se programó ninguna para
+ * esta semana, sigue la anterior. Devuelve null si no hay portadas.
+ */
+export async function getCurrentCover() {
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Bogota" }).format(new Date());
+  const [y, m, d] = today.split("-").map(Number);
+  const date = new Date(Date.UTC(y, m - 1, d));
+  date.setUTCDate(date.getUTCDate() - ((date.getUTCDay() + 6) % 7)); // lunes de esta semana
+  const monday = date.toISOString().slice(0, 10);
+
+  const res = await fetchAPI(
+    `/covers?filters[weekStart][$lte]=${monday}&sort=weekStart:desc&pagination[pageSize]=1&populate[image][fields][0]=url`
+  );
+  return (res.data?.[0] as { title: string; subtitle?: string | null; image?: { url: string } | null }) ?? null;
+}
+
+/**
+ * Arma la consulta de búsqueda: el texto se busca en el nombre, la descripción
+ * y el nombre de la categoría, sin importar mayúsculas o minúsculas.
+ */
+export function searchQuery(text: string, pageSize: number) {
+  const q = encodeURIComponent(text.trim());
+  return (
+    `/products?filters[$or][0][name][$containsi]=${q}` +
+    `&filters[$or][1][description][$containsi]=${q}` +
+    `&filters[$or][2][category][name][$containsi]=${q}` +
+    `&sort=name:asc&pagination[pageSize]=${pageSize}` +
+    `&populate[image][fields][0]=url&populate[category][fields][0]=name`
+  );
+}
+
+/** Búsqueda para la página de resultados (/buscar). */
+export async function searchProducts(text: string, pageSize = 48) {
+  const res = text.trim() ? await fetchAPI(searchQuery(text, pageSize)) : EMPTY_RESPONSE;
+  return { data: res.data, total: res.meta?.pagination?.total ?? res.data.length };
+}
+
 /** Busca un producto por su slug. Devuelve null si no existe. */
 export async function getProductBySlug(slug: string) {
   const res = await fetchAPI(

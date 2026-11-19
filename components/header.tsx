@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ShoppingCart, Menu, X, Search, User, Heart } from "lucide-react";
+import { ShoppingCart, Menu, X, User, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { LiveSearch } from "@/components/live-search";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 
@@ -61,12 +61,10 @@ export function Header() {
             <Heart className="h-6 w-6 stroke-[1.5]" />
           </Link>
         
-          <button 
-            className="p-2 text-gray-700 hover:text-black transition-colors flex items-center justify-center"
-            aria-label="Buscar"
-          >
-            <Search className="h-6 w-6 stroke-[1.5]" />
-          </button>
+          {/* Buscador en vivo (en celular está dentro del menú) */}
+          <div className="hidden md:block">
+            <LiveSearch variant="desktop" />
+          </div>
           
           
           <Link
@@ -105,7 +103,7 @@ export function Header() {
         <div className="fixed inset-0 top-16 z-50 bg-background md:hidden p-4">
           <div className="container">
             <div className="mb-6">
-              <Input type="search" placeholder="Buscar productos..." className="w-full" />
+              <LiveSearch variant="mobile" onNavigate={() => setIsMenuOpen(false)} />
             </div>
 
             <nav className="grid gap-12">

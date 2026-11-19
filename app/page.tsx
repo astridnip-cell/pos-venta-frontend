@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/product-card";
 import { ReviewCard } from "@/components/review-card";
 import { CommitmentSection } from "../components/commitment-section";
 import { FeaturedProduct } from "../components/featured-product";
-import { getProducts, getStrapiMedia } from "../lib/strapi";
+import { getCurrentCover, getProducts, getStrapiMedia } from "../lib/strapi";
 
 interface Product {
   id: number;
@@ -20,11 +20,13 @@ interface Product {
 }
 
 export default async function Home() {
-  const [womenRes, menRes, accessoriesRes, mainFeaturedRes] = await Promise.all([
+  const [womenRes, menRes, accessoriesRes, mainFeaturedRes, cover] = await Promise.all([
     getProducts({ category: "mujer", limit: 2, sort: "createdAt:desc" }),
     getProducts({ category: "hombre", limit: 2, sort: "createdAt:desc" }),
     getProducts({ category: "accesorios", limit: 2, sort: "createdAt:desc" }),
-    getProducts({ featured: true, limit: 1 })
+    getProducts({ featured: true, limit: 1 }),
+    // Portada de la semana (sección "Portadas" del panel de administración)
+    getCurrentCover(),
   ]);
 
   const womenProducts: Product[] = womenRes?.data || [];
@@ -64,13 +66,26 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-7 relative w-full h-[600px] sm:h-[800px] rounded-3xl overflow-hidden bg-white shadow-lg">
+              {/* Foto principal: la portada de la semana; si no hay, el producto destacado */}
               <Image
-                src={getStrapiMedia(mainProduct?.image?.url) || "/modelo.png"}
-                alt={mainProduct?.name || "Producto destacado"}
+                src={
+                  cover?.image?.url
+                    ? getStrapiMedia(cover.image.url)
+                    : getStrapiMedia(mainProduct?.image?.url) || "/modelo.png"
+                }
+                alt={cover?.title || mainProduct?.name || "Producto destacado"}
                 fill
                 priority
-                className="object-contain object-center" 
+                className={cover?.image?.url ? "object-cover object-center" : "object-contain object-center"}
               />
+              {cover?.title && (
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-6 sm:p-8">
+                  <p className="text-2xl sm:text-3xl font-bold text-white">{cover.title}</p>
+                  {cover.subtitle && (
+                    <p className="mt-1 text-sm sm:text-base text-white/90">{cover.subtitle}</p>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="md:col-span-5 flex flex-col justify-center items-center text-center space-y-6 px-4 sm:px-8">
