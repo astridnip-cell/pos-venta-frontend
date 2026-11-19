@@ -91,8 +91,11 @@ export interface MyOrder {
   subtotal: number;
   shippingCost: number;
   total: number;
+  shippingAddress?: string;
+  shippingCity?: string;
   items: { name: string; price: number; quantity: number; size?: string | null; color?: string | null }[];
   createdAt: string;
+  updatedAt?: string;
 }
 
 /** Pedidos del cliente con sesión iniciada (el más reciente primero). */

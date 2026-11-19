@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Loader2, LogOut } from "lucide-react";
+import { Loader2, LogOut, Package } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,8 +60,13 @@ function AccountContent() {
       <div className="max-w-md mx-auto py-16 text-center space-y-4">
         <h1 className="text-2xl font-bold">Hola, {user.username}</h1>
         <p className="text-gray-500">{user.email}</p>
-        <div className="flex justify-center gap-3">
+        <div className="flex flex-wrap justify-center gap-3">
           <Button asChild>
+            <Link href="/cuenta/pedidos">
+              <Package className="h-4 w-4 mr-2" /> Mis pedidos
+            </Link>
+          </Button>
+          <Button variant="outline" asChild>
             <Link href="/">Seguir comprando</Link>
           </Button>
           <Button variant="outline" onClick={logout}>

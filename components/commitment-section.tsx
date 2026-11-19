@@ -6,12 +6,14 @@ export function CommitmentSection() {
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 items-center">
           <div className="relative rounded-lg overflow-hidden">
+            {/* Foto de la carpeta public/ (sin marcas de agua ni logos de otras marcas) */}
             <Image
-              src="/placeholder.svg?height=600&width=800"
-              width={800}
-              height={600}
-              alt="Compromiso con calidad"
-              className="object-cover aspect-[4/3"
+              src="/imagen_principal.png"
+              width={825}
+              height={413}
+              alt="Pareja con abrigos y sombrero caminando por la ciudad"
+              className="w-full object-cover aspect-[4/3]"
+              sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </div>
           <div className="space-y-4">

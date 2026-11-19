@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/product-card";
 import { ReviewCard } from "@/components/review-card";
 import { CommitmentSection } from "../components/commitment-section";
 import { FeaturedProduct } from "../components/featured-product";
-import { getCurrentCover, getProducts, getStrapiMedia } from "../lib/strapi";
+import { getCurrentCover, getProducts, getStrapiMedia, toList } from "../lib/strapi";
 
 interface Product {
   id: number;
@@ -24,7 +24,7 @@ export default async function Home() {
     getProducts({ category: "mujer", limit: 2, sort: "createdAt:desc" }),
     getProducts({ category: "hombre", limit: 2, sort: "createdAt:desc" }),
     getProducts({ category: "accesorios", limit: 2, sort: "createdAt:desc" }),
-    getProducts({ featured: true, limit: 1 }),
+    getProducts({ featured: true, limit: 2 }),
     // Portada de la semana (sección "Portadas" del panel de administración)
     getCurrentCover(),
   ]);
@@ -33,6 +33,12 @@ export default async function Home() {
   const menProducts: Product[] = menRes?.data || [];
   const accessoriesProducts: Product[] = accessoriesRes?.data || [];
   const mainProduct = mainFeaturedRes?.data?.[0];
+  // Sección "Producto destacado": el segundo destacado (o el primero si solo hay uno)
+  const spotlight = mainFeaturedRes?.data?.[1] ?? mainProduct;
+  const spotlightSizes = toList(spotlight?.sizes);
+  const spotlightColors = toList(spotlight?.colors);
+  const spotlightOriginal = Number(spotlight?.originalPrice) || 0;
+  const spotlightPrice = Number(spotlight?.price) || 0;
 
   const recentProducts: Product[] = [
   menProducts[0], womenProducts[0], accessoriesProducts[0],
@@ -183,13 +189,22 @@ export default async function Home() {
         </div>
       </section>
 
-      <FeaturedProduct
-        title="Edición Limitada Signature"
-        description="Algodón orgánico premium con acabados hechos a mano."
-        price={150000}
-        salePrice={120000}
-        features={["100% Algodón Colombiano", "Tintes Ecológicos", "Costura Reforzada"]}
-      />
+      {/* Producto destacado real de Strapi (se marca como "featured" en el panel o en Strapi) */}
+      {spotlight && (
+        <FeaturedProduct
+          title={spotlight.name}
+          description={spotlight.description || ""}
+          price={spotlightOriginal > spotlightPrice ? spotlightOriginal : spotlightPrice}
+          salePrice={spotlightOriginal > spotlightPrice ? spotlightPrice : undefined}
+          features={[
+            spotlightSizes.length ? `Tallas: ${spotlightSizes.join(", ")}` : "",
+            spotlightColors.length ? `Colores: ${spotlightColors.join(", ")}` : "",
+            spotlight.stock > 0 ? `${spotlight.stock} unidades disponibles` : "Agotado por ahora",
+          ].filter(Boolean)}
+          imageSrc={getStrapiMedia(spotlight.image?.url)}
+          href={`/producto/${spotlight.slug}`}
+        />
+      )}
 
       {/* Sección de Redes Sociales con Colorido Propio */}
       <section className="py-12 border-t border-gray-100">

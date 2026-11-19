@@ -95,6 +95,11 @@ function ThanksContent() {
             <Link href="/">Seguir comprando</Link>
           </Button>
         )}
+        {result && (
+          <Button variant="outline" asChild>
+            <Link href="/cuenta/pedidos">Ver mis pedidos</Link>
+          </Button>
+        )}
         {error && (
           <Button variant="outline" asChild>
             <Link href="/cuenta">Iniciar sesión</Link>
