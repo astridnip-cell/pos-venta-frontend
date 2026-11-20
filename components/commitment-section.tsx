@@ -4,7 +4,11 @@ export function CommitmentSection() {
   return (
     <section className="py-12 md:py-24">
       <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-2 items-center">
+        {/* Título de toda la sección: va arriba, sobre la foto y el texto */}
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-balance mb-10 md:mb-12">
+          Comprometidos con la calidad y la sostenibilidad
+        </h2>
+        <div className="grid gap-8 lg:grid-cols-2 items-center">
           <div className="relative rounded-lg overflow-hidden">
             {/* Foto de la carpeta public/ (sin marcas de agua ni logos de otras marcas) */}
             <Image
@@ -17,9 +21,6 @@ export function CommitmentSection() {
             />
           </div>
           <div className="space-y-4">
-            <h2 className="text-3xl font-bold">
-              Comprometidos con la calidad y la sostenibilidad
-            </h2>
             <p className="text-gray-500 md:text-lg">
               Creemos que la moda puede ser ética y sostenible. Cada prenda está
               diseñada pensando en su impacto ambiental y fabricada con

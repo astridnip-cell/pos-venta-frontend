@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
+import { AnnouncementBar } from "@/components/announcement-bar";
 import { CartProvider } from "@/context/CartContext"; 
 import { WishlistProvider } from "@/context/WishlistContext";
 import { AuthProvider } from "@/context/AuthContext";
@@ -35,6 +36,7 @@ export default function RootLayout({
           <CartProvider>
             <WishlistProvider>
               <div className="relative flex min-h-screen flex-col">
+                <AnnouncementBar />
                 <Header />
                 {children}
               </div>

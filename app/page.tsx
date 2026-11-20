@@ -1,6 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Star, ChevronRight, Instagram, Facebook, Music } from "lucide-react";
+import {
+  Star,
+  ChevronRight,
+  Instagram,
+  Facebook,
+  Music,
+  Truck,
+  ShieldCheck,
+  PackageSearch,
+  Search,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product-card";
@@ -8,6 +18,14 @@ import { ReviewCard } from "@/components/review-card";
 import { CommitmentSection } from "../components/commitment-section";
 import { FeaturedProduct } from "../components/featured-product";
 import { getCurrentCover, getProducts, getStrapiMedia, toList } from "../lib/strapi";
+
+// Beneficios reales de la tienda (se muestran debajo de la portada)
+const BENEFITS = [
+  { icon: Truck, title: "Envíos a toda Colombia", desc: "Gratis desde $150.000" },
+  { icon: ShieldCheck, title: "Pago seguro", desc: "Precios validados al pagar" },
+  { icon: PackageSearch, title: "Sigue tu pedido", desc: "Estado en Mis pedidos" },
+  { icon: Search, title: "Encuentra rápido", desc: "Buscador con sugerencias" },
+];
 
 interface Product {
   id: number;
@@ -55,14 +73,17 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col min-h-screen">
-      
+
       {/* Hero Section */}
       <section className="py-12 md:py-16">
         <div className="container px-4 md:px-16">
           <div className="flex flex-col items-center text-center mb-20">
-            <h1 className="text-5xl font-bold tracking-tight sm:text-4xl md:text-7xl">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-balance">
               Ropa personalizada Diseñada Para{" "}
-              <span className="bg-fuchsia-500 text-white px-2 py-1 rounded-xl">Tu Estilo</span>
+              {/* inline-block + nowrap: "Tu Estilo" nunca se parte en dos renglones */}
+              <span className="inline-block whitespace-nowrap bg-fuchsia-500 text-white px-2 py-1 rounded-xl">
+                Tu Estilo
+              </span>
             </h1>
             <p className="mt-4 max-w-[900px] text-gray-700 text-lg">
               Cada prenda está confeccionada con los mejores materiales,
@@ -126,7 +147,26 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      
+
+      {/* Beneficios reales de la tienda, justo debajo de la portada */}
+      <section className="pb-8 md:pb-10">
+        <div className="container px-4 md:px-16">
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-3 rounded-3xl bg-black p-3">
+            {BENEFITS.map((item) => (
+              <div key={item.title} className="flex items-center gap-3 rounded-2xl border border-white/25 bg-black p-4">
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-white text-black">
+                  <item.icon className="h-5 w-5" />
+                </span>
+                <span>
+                  <span className="block text-sm font-semibold text-white">{item.title}</span>
+                  <span className="block text-xs text-gray-300">{item.desc}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Cuadrícula de Colección */}
       <section className="py-12 md:py-24">
         <div className="container px-4 md:px-6">
@@ -148,35 +188,75 @@ export default async function Home() {
               />
             ))}
           </div>
-          <div className="flex flex-wrap justify-center gap-4 mt-12">
-            <Link href="/mujer"><Button className="rounded-full px-6">Ver sección Mujer <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
-            <Link href="/hombre"><Button className="rounded-full px-6">Ver sección Hombre <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
-            <Link href="/accesorios"><Button className="rounded-full px-6">Ver sección Accesorios <ChevronRight className="w-4 h-4 ml-1" /></Button></Link>
-          </div>
         </div>
       </section>
 
-      {/* Featured In Section */}
-      <section className="bg-[#0b132b] py-12 px-2 text-white">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-2xl font-semibold tracking-wider uppercase mb-12 text-gray-100">Destacado en</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-center">
+      {/* Producto destacado real de Strapi (se marca como "featured" en el panel o en Strapi) */}
+      {spotlight && (
+        <FeaturedProduct
+          title={spotlight.name}
+          description={spotlight.description || ""}
+          category={spotlight.category?.name}
+          categoryHref={
+            ["hombre", "mujer", "accesorios", "ofertas"].includes(spotlight.category?.slug)
+              ? `/${spotlight.category.slug}`
+              : undefined
+          }
+          price={spotlightOriginal > spotlightPrice ? spotlightOriginal : spotlightPrice}
+          salePrice={spotlightOriginal > spotlightPrice ? spotlightPrice : undefined}
+          sizes={spotlightSizes}
+          colors={spotlightColors}
+          stock={Number(spotlight.stock) || 0}
+          imageSrc={getStrapiMedia(spotlight.image?.url)}
+          href={`/producto/${spotlight.slug}`}
+        />
+      )}
+
+      {/* Comprometidos con la calidad y la sostenibilidad */}
+      <CommitmentSection />
+
+      {/* Moda con raíces colombianas: colecciones + ciudades de inspiración + beneficios reales de la tienda */}
+      <section className="bg-[#0b132b] py-14 px-4 text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-xs uppercase tracking-[0.3em] text-gray-400 mb-3">Hecho para Colombia</p>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-wider uppercase text-gray-100">
+              Moda con raíces colombianas
+            </h2>
+            <p className="mt-3 text-sm text-gray-400 max-w-xl mx-auto">
+              Cuatro colecciones inspiradas en las ciudades con más tradición textil del país.
+            </p>
+          </div>
+
+          {/* Colecciones, cada una con su ciudad de inspiración */}
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
-              { name: "VOGUE", font: "Didot, serif", desc: "Revista de moda" },
-              { name: "GQ", font: "Impact, sans-serif", desc: "Estilo masculino" },
-              { name: "ELLE", font: "Georgia, serif", desc: "Tendencias de moda" },
-              { name: "Esquire", font: "Times New Roman, serif", desc: "Moda contemporánea" }
-            ].map((brand) => (
-              <div key={brand.name} className="flex flex-col items-center justify-center p-6 bg-white/5 rounded-2xl border border-white/10">
-                <span className="text-4xl sm:text-5xl font-bold text-white mb-2" style={{ fontFamily: brand.font }}>{brand.name}</span>
-                <span className="text-xs text-gray-400 uppercase tracking-widest">{brand.desc}</span>
-              </div>
+              { href: "/hombre", name: "Hombre", city: "Bogotá", desc: "Sastrería y abrigos para la ciudad" },
+              { href: "/mujer", name: "Mujer", city: "Medellín", desc: "Diseño fresco de la capital de la moda" },
+              { href: "/accesorios", name: "Accesorios", city: "Cali", desc: "Detalles con ritmo y color" },
+              { href: "/ofertas", name: "Ofertas", city: "Barranquilla", desc: "Precios especiales de temporada" },
+            ].map((col) => (
+              <Link
+                key={col.href}
+                href={col.href}
+                className="group flex flex-col p-5 sm:p-6 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 hover:border-white/30 transition-colors"
+              >
+                <span className="text-[11px] text-gray-400 uppercase tracking-widest">Inspiración {col.city}</span>
+                <span className="mt-3 text-3xl xl:text-4xl font-bold text-white break-words" style={{ fontFamily: "Georgia, serif" }}>
+                  {col.name}
+                </span>
+                <span className="mt-2 text-xs sm:text-sm text-gray-400">{col.desc}</span>
+                <span className="mt-auto pt-4 inline-flex items-center text-xs font-semibold uppercase tracking-widest text-white">
+                  Ver colección
+                  <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
             ))}
           </div>
+
         </div>
       </section>
 
-      <CommitmentSection />
       <section className="py-12 md:py-24 bg-gray-50">
         <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold text-center mb-12">Lo que dicen nuestros clientes</h2>
@@ -188,23 +268,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      {/* Producto destacado real de Strapi (se marca como "featured" en el panel o en Strapi) */}
-      {spotlight && (
-        <FeaturedProduct
-          title={spotlight.name}
-          description={spotlight.description || ""}
-          price={spotlightOriginal > spotlightPrice ? spotlightOriginal : spotlightPrice}
-          salePrice={spotlightOriginal > spotlightPrice ? spotlightPrice : undefined}
-          features={[
-            spotlightSizes.length ? `Tallas: ${spotlightSizes.join(", ")}` : "",
-            spotlightColors.length ? `Colores: ${spotlightColors.join(", ")}` : "",
-            spotlight.stock > 0 ? `${spotlight.stock} unidades disponibles` : "Agotado por ahora",
-          ].filter(Boolean)}
-          imageSrc={getStrapiMedia(spotlight.image?.url)}
-          href={`/producto/${spotlight.slug}`}
-        />
-      )}
 
       {/* Sección de Redes Sociales con Colorido Propio */}
       <section className="py-12 border-t border-gray-100">
@@ -219,7 +282,7 @@ export default async function Home() {
                 <Instagram className="w-6 h-6 text-pink-600" />
               </div>
             </Link>
-            
+
             {/* Facebook */}
             <Link href="https://facebook.com" target="_blank" className="group flex flex-col items-center gap-2">
               <div className="p-3.5 rounded-full bg-blue-50 border border-blue-100 group-hover:bg-blue-100 group-hover:scale-110 transition-all duration-300 shadow-sm">
